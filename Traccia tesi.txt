@@ -1,0 +1,28 @@
+Introduzione
+    - Descrizione del problema
+    - Spiegazione degli strumenti GIS in max 20 righe
+    - Spiegazione di cosa si vuole ottenere
+
+Descrizione approfondita dell'argomento
+    - Descrizione di QGis
+    - Descrizione dei tipi di dati supportati
+    - Architettura di QGis
+    - Sistema dei plugin
+
+Realizzazione
+    - Librerie scelte
+          - Qt4
+          - Grass
+          - Osgeo
+    - Interfaccia grafica
+          - Scelte implementative
+    - Gestione input
+          - Scelte implementative
+    - Gestione dati
+          - Scelte implementative
+    - Gestione output
+          - Scelte implementative
+
+
+Appendice
+    - Strutturare un plugin
