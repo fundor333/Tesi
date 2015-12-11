@@ -22,3 +22,6 @@
 *.mtc1
 *.out
 *.synctex.gz
+Tesi*
+!Tesi.tex
+!Tesi.pdf

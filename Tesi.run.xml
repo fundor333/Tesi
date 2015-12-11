@@ -65,8 +65,6 @@
       <file>biblatex.cfg</file>
       <file>italian-philosophy.lbx</file>
       <file>italian.lbx</file>
-      <file>english-philosophy.lbx</file>
-      <file>english.lbx</file>
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="1">
