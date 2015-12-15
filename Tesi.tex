@@ -1,9 +1,3 @@
-% I seguenti commenti speciali impostano:
-% 1. utf8 come codifica di input,
-% 2. PDFLaTeX come motore di composizione;
-% 3. Tesi.tex come documento principale;
-% 4. il controllo ortografico italiano per l'editor.
-
 % !TEX encoding = UTF-8 Unicode
 % !TEX TS-program = pdflatex
 % !TEX root = Tesi.tex
@@ -12,11 +6,8 @@
 \documentclass[10pt,%                      % corpo del font principale
                a4paper,%                   % carta A4
                twoside,openright,%         % fronte-retro
-               draft,
 %              oneside,openany,%           % solo fronte
-			   $•$
                ]{book}
-
 \usepackage[T1]{fontenc}                   % codifica dei font:
                                            % NOTA BENE! richiede una distribuzione *completa* di LaTeX
                                            % per esempio TeXLive o MiKTeX *complete*
@@ -66,7 +57,7 @@
                                            % produce uno stile di citazione autore-anno;
                                            % lo stile "numeric-comp" produce riferimenti numerici
 
-\bibliography{Bibliografia}                % database di biblatex
+\bibliography{Bibliografia}
 
 \usepackage{chngpage,calc}                 % centra il frontespizio
 
@@ -83,6 +74,8 @@
 \input{impostazioni-tesi}                  % file con le impostazioni personali
 
 \begin{document}
+
+
 \frontmatter
 %******************************************************************
 % Materiale iniziale
