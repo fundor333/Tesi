@@ -1,11 +1,4 @@
 %*********************************************************************************
-% impostazioni-tesi.tex
-% di Lorenzo Pantieri (2011)
-% file che contiene le impostazioni della tesi
-%*********************************************************************************
-
-
-%*********************************************************************************
 % Comandi persaonali
 %*******************************************************
 \newcommand{\myName}{Lorenzo Pantieri}                       % autore
@@ -26,9 +19,9 @@
 %*********************************************************************************
 
 % comandi per gli insiemi numerici (serve il pacchetto amssymb)
-\newcommand{\numberset}{\mathbb} 
-\newcommand{\N}{\numberset{N}} 
-\newcommand{\R}{\numberset{R}} 
+\newcommand{\numberset}{\mathbb}
+\newcommand{\N}{\numberset{N}}
+\newcommand{\R}{\numberset{R}}
 
 % un ambiente per i sistemi
 \newenvironment{sistema}%
@@ -36,13 +29,14 @@
   {\end{array}\right.}
 
 % definizioni (serve il pacchetto amsthm)
-\theoremstyle{definition} 
+\theoremstyle{definition}
 \newtheorem{definizione}{Definizione}
 
 % teoremi, leggi e decreti (serve il pacchetto amsthm)
-\theoremstyle{plain} 
+\theoremstyle{plain}
 \newtheorem{teorema}{Teorema}
 \newtheorem{legge}{Legge}
+\newtheorem{dimostrazione}{Dimostrazione}
 \newtheorem{decreto}[legge]{Decreto}
 \newtheorem{murphy}{Murphy}[section]
 
@@ -53,11 +47,10 @@
 %*********************************************************************************
 \defbibheading{bibliography}{%
 \cleardoublepage
-\phantomsection 
+\phantomsection
 \addcontentsline{toc}{chapter}{\bibname}
 \chapter*{\bibname\markboth{\bibname}
 {\bibname}}}
-
 
 
 %*********************************************************************************
@@ -77,7 +70,7 @@
     breaklines=true,
     frameround=ftff,
     frame=single
-} 
+}
 
 
 
@@ -89,7 +82,7 @@
     %draft,	% = elimina tutti i link (utile per stampe in bianco e nero)
     colorlinks=true, linktocpage=true, pdfstartpage=1, pdfstartview=FitV,%
     % decommenta la riga seguente per avere link in nero (per esempio per la stampa in bianco e nero)
-    %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,% 
+    %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,%
     breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
     plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
     hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
@@ -104,13 +97,10 @@
 }
 
 
-
 %*********************************************************************************
 % Impostazioni di graphicx
 %*********************************************************************************
 \graphicspath{{Immagini/}} % cartella dove sono riposte le immagini
-
-
 
 %*********************************************************************************
 % Impostazioni di xcolor
@@ -118,15 +108,10 @@
 \definecolor{webgreen}{rgb}{0,.5,0}
 \definecolor{webbrown}{rgb}{.6,0,0}
 
-
 %*********************************************************************************
 % Impostazioni di caption
 %*********************************************************************************
 \captionsetup{tableposition=top,figureposition=bottom,font=small,format=hang,labelfont=bf}
-
-
-
-
 
 %*********************************************************************************
 % Altro
