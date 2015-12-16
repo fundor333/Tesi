@@ -7,17 +7,41 @@
 \chapter{Descrizione approfondita dell'argomento}
 \label{cap:descrizione}
 %************************************************
-\section{Problema da risolvere}
-\lipsum[1]
+\section{Problema da risolvere} Lo scopo di questa tesi è quello di calcolare in
+modo corretto l'erosione del territorio nell'area geografica indicata. Questo è
+stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il
+modello proposto è quello indicato in \cite[p.~37]{tesi:ambientale}}
 
-\section{Descrizione di QGis}
-\lipsum[2]
+\begin{equation}
+A = R * K * LS * C * P
+\end{equation}
 
-\section{Descrizione dei tipi di dati supportati}
-\lipsum[3]
+in cui
+\begin{itemize}
+\item \textbf{A} corrispondente alla perdita di suolo annua
+\item \textbf{R} erosività delle precipitazioni
+\item \textbf{K} erodibilità del suolo
+\item \textbf{LS} rapporto lunghezza pendenza
+\item \textbf{C} fattore di copertura del suolo
+\item \textbf{P} misure di prevenzione dell'erosione
+\end{itemize}
 
-\section{Architettura di QGis}
-\lipsum[4]
+Questo modello è stato quindi applicato utilizzando i dati in formato di layer raster attraverso l'applicativo QGis.
+Questo viene fatto in quanto lo standard \textit{de facto} per questa tipologia di dato è il layer raster.
 
-\section{Sistema dei plugin}
-\lipsum[5]
+
+In particolare questo modello viene utilizzato per calcolare anno per anno l'erosione del territorio interessato avendo variazioni di dati in base all'anno o assumendo come invarianti negli anni i dati inseriti in imput.
+
+\section{QGis}
+
+QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
+Questo ha permesso la creazione di una community intorno a questo programma che sviluppa il programma in ogni sua parte e sostiene una struttura di plugin che aumenta le potenzialità del programma senza appesantirlo.
+Infatti questo meccanismo da la possibilità di avere una base su cui strutturare un applicativo che esegua un determinato compito utile per un determinato lavoro ma non necessario in un uso generico del programma.
+
+In oltre questo programma è stato sviluppato in C, C++ e Python. Questo comporta la portabilità di questo programma su tutti i maggiori sistemi operativi esistenti\footnote{Supporta Linux, Mac, Windows e Android} e obbliga i plugin a essere anche loro stessi a essere indipendenti dal sistema operativo usato venendo sviluppati, a loro volta, i linguaggi C, C++ e Python.
+
+\subsection{Descrizione dei tipi di dati supportati}
+
+\subsection{Architettura di QGis}
+
+\subsection{Sistema dei plugin}
