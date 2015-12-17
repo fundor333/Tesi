@@ -35,12 +35,16 @@ In particolare questo modello viene utilizzato per calcolare anno per anno l'ero
 \section{QGis}
 
 QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
-Questo ha permesso la creazione di una community intorno a questo programma che sviluppa il programma in ogni sua parte e sostiene una struttura di plugin che aumenta le potenzialità del programma senza appesantirlo.
-Infatti questo meccanismo da la possibilità di avere una base su cui strutturare un applicativo che esegua un determinato compito utile per un determinato lavoro ma non necessario in un uso generico del programma.
 
-In oltre questo programma è stato sviluppato in C, C++ e Python. Questo comporta la portabilità di questo programma su tutti i maggiori sistemi operativi esistenti\footnote{Supporta Linux, Mac, Windows e Android} e obbliga i plugin a essere anche loro stessi a essere indipendenti dal sistema operativo usato venendo sviluppati, a loro volta, i linguaggi C, C++ e Python.
+In particolare sono state utilizzate le componenti di gestione input e output dei raster, il motore di calcolo e il sistema di rendering video. In oltre il programma supporta anche un sistema di plugin e scripting che aumenta le funzionalità del programma utilizzando codice esterno sviluppato dalla comunnity. 
+
+Altro dettaglio molto utile di QGis è il fatto che un programma multi piattaforma. Questo vuol dire che il programma è stato distribuito per più sistemi operativi\footnote{In questo caso per Android, Mac OS, Windows e Linux} e obbliga gli sviluppatori a scrivere plugin e script che siano anch'essi multipiattaforma. Questo permette l'utilizzo dei plugin e degli script per la creazione di funzioni automatizzate utilizzando le componenti già presenti in QGis o aggiungerne di nuove.
+
+In oltre, QGis supporta la totalità dei formati open di file che  raster e layer  
 
 \subsection{Descrizione dei tipi di dati supportati}
+
+
 
 \subsection{Architettura di QGis}
 
