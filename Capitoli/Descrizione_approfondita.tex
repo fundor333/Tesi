@@ -36,7 +36,7 @@ In particolare questo modello viene utilizzato per calcolare anno per anno l'ero
 
 QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
 
-In particolare sono state utilizzate le componenti di gestione input e output dei raster, il motore di calcolo e il sistema di rendering video. In oltre il programma supporta anche un sistema di plugin e scripting che aumenta le funzionalità del programma utilizzando codice esterno sviluppato dalla comunnity. 
+In particolare sono state utilizzate le componenti di gestione input e output dei raster, il motore di calcolo e il sistema di rendering video. In oltre il programma supporta anche un sistema di plugin e scripting che aumenta le funzionalità del programma utilizzando codice esterno sviluppato dalla comunnity.
 
 Altro dettaglio molto utile di QGis è il fatto che un programma multi piattaforma. Questo vuol dire che il programma è stato distribuito per più sistemi operativi\footnote{In questo caso per Android, Mac OS, Windows e Linux} e obbliga gli sviluppatori a scrivere plugin e script che siano anch'essi multipiattaforma. Questo permette l'utilizzo dei plugin e degli script per la creazione di funzioni automatizzate utilizzando le componenti già presenti in QGis o aggiungerne di nuove.
 
@@ -51,7 +51,31 @@ I formati di dati possono essere divisi in tre macrocategorie in base a come ven
 	\item DBRMS con estensione spaziale
 \end{itemize}
 
+Questi tre formati permettono solo alcune operazioni possibili legate alla composizione dei dati nel formato di input.
+Quindi, per alcune operazioni, QGis converte i dati nell formato appropiato in modo che sia sempre possibile fare tutte le operazioni disponibili, anche se queste puo' portare ad approssimazioni dei dati nella conversione.
 
-\subsection{Architettura di QGis}
+\subsection{La struttura di QGis}
+QGis è un programma avanzato con molte funzionalità che possono essere suddivise in alcune macro-categorie che sono indipendenti dal tipo di dato o file utilizzato.
+Oltre alle funzionalità di default è possibile installare plugin che aggiungono funzionalità o macro al set standard.
+
+\subsubsection{Rendering grafico dei dati}
+QGis ha la capacità di realizzare svariate visualizzazioni grafiche dei dati inseriti o calcolati.
+Questo permette la realizzazioni di immagini ad alta definizione dei dati inseriti e ne permetta anche l'esportazione nei formati più comuni di immagini.
+
+\subsubsection{Realizzazione mappe}
+In presenza di dati georeferenziati QGis permette di sovrapporre la rappresentazione grafica dei dati alla mappa corrispondente alle coordinate georeferenziali.
+Questo permette di creare mappe fisiche contenenti la visualizzazione di aree di erosione attraverso aree colorate o altri effetti applicabili alla mappa sottostante.
+
+\sububsection{Creazione, elaborazione e conversione dati}
+QGis presenta due moduli per l'elaborazioni di dati:
+\begin{itemize}
+	\item \textbf{Class} modulo standard di QGis per i calcoli aritmetici elementari e alcuni calcoli statistici di base
+	\item \textbf{Grass} modulo aggiuntivo di QGis per i calcoli avanzati e regressioni. Contiene anche modelli previsionali e probabilistici.
+\end{itemize}
+
+\subsubsection{Analisi dati}
+Quando si lavora con un insieme di dati non è detto che questi siano tutti corretti o non abbiano un livello di approssimazione.
+All'interno di QGis sono disponibili, di base, un insieme di funzionalità atte a calcolare la bontà delle approssimazioni o dei dati stessi presi in esame dal programma.
+Questo viene fatto di base con algoritmi generici per la maggior parte dei formati ma se si usa solo un tipo specifico o si vuole una approssimazione o un modello preciso è possibile ottenere il risultato desiderato attraverso plugin di terze parti.
 
 \subsection{Sistema dei plugin}
