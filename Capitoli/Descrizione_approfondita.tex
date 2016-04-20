@@ -8,8 +8,8 @@
 \label{cap:descrizione}
 %************************************************
 \section{Problema da risolvere} Lo scopo di questa tesi è quello di calcolare in
-modo corretto l'erosione del territorio nell'area geografica indicata. Questo è
-stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il
+modo corretto l'erosione del territorio nell'area geografica scielta.
+Questo è stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il
 modello proposto è quello indicato in \cite[p.~37]{tesi:ambientale}}
 
 \begin{equation}
@@ -56,7 +56,7 @@ Quindi, per alcune operazioni, QGis converte i dati nell formato appropiato in m
 
 \subsection{La struttura di QGis}
 QGis è un programma avanzato con molte funzionalità che possono essere suddivise in alcune macro-categorie che sono indipendenti dal tipo di dato o file utilizzato.
-Oltre alle funzionalità di default è possibile installare plugin che aggiungono funzionalità o macro al set standard.
+Le funzionalità standard di QGis sono gestite attraverso dei moduli che costituiscono l'istallazione di base del programma e le funzionalità aggiuntive vengono implementate attraverso plugin dipendenti da questi moduli di base per poter funzionare correttamente.
 
 \subsubsection{Rendering grafico dei dati}
 QGis ha la capacità di realizzare svariate visualizzazioni grafiche dei dati inseriti o calcolati.
@@ -79,3 +79,13 @@ All'interno di QGis sono disponibili, di base, un insieme di funzionalità atte 
 Questo viene fatto di base con algoritmi generici per la maggior parte dei formati ma se si usa solo un tipo specifico o si vuole una approssimazione o un modello preciso è possibile ottenere il risultato desiderato attraverso plugin di terze parti.
 
 \subsection{Sistema dei plugin}
+Per aumentare lel funzionalità di QGis e scriptare alcune operazioni sono stati creati i plugin.
+Sono dei programmi dipendenti da QGis che implementano funzionalità non presenti nel programma di base o estendono il supporto delle funzioni esistenti o i tipi di file supportati. Questo permette di utilizzare formati di file proprietari o concatenare operazioni da eseguire sui dati in ingresso.
+
+\subsubsection{Plugin per formati di file}
+Vengono utilizzati per elaborare dati grezzi altrimenti difficilmente manipolabili. 
+Un esempio possono essere i dati grezzi ottenuti da degli strumenti di misurazione con dati in output non standard.
+Normalmente questi file sono leggibili solo col programma abilitato alle modifiche ma, con l'utilizzo del plugin corretto, è possibile leggerlo e elaborarlo direttamente in QGis.
+
+\subsubsection{Pluing che alterano o aumentano le funzionalità}
+La reale forza di QGis. Permettono di ampliare le funzioni del programma semplificando o aumentando le funzionalità pre esisteni. Alcuni esempi sono i plugin della famiglia GRASS che aggiungono operazioni matematiche o gli strumenti di creazione timelapse partendo da una serie di ruster temporizzati.s
