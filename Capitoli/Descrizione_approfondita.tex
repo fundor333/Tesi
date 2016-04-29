@@ -57,6 +57,7 @@ Quindi, per alcune operazioni, QGis converte i dati nell formato appropiato in m
 \subsection{La struttura di QGis}
 QGis è un programma avanzato con molte funzionalità che possono essere suddivise in alcune macro-categorie che sono indipendenti dal tipo di dato o file utilizzato.
 Le funzionalità standard di QGis sono gestite attraverso dei moduli che costituiscono l'istallazione di base del programma e le funzionalità aggiuntive vengono implementate attraverso plugin dipendenti da questi moduli di base per poter funzionare correttamente.
+Solitamente i moduli sono scritti in C o C++ mentre i plugin e gli script sono in Python.
 
 \subsubsection{Rendering grafico dei dati}
 QGis ha la capacità di realizzare svariate visualizzazioni grafiche dei dati inseriti o calcolati.
@@ -66,7 +67,7 @@ Questo permette la realizzazioni di immagini ad alta definizione dei dati inseri
 In presenza di dati georeferenziati QGis permette di sovrapporre la rappresentazione grafica dei dati alla mappa corrispondente alle coordinate georeferenziali.
 Questo permette di creare mappe fisiche contenenti la visualizzazione di aree di erosione attraverso aree colorate o altri effetti applicabili alla mappa sottostante.
 
-\sububsection{Creazione, elaborazione e conversione dati}
+\subsubsection{Creazione, elaborazione e conversione dati}
 QGis presenta due moduli per l'elaborazioni di dati:
 \begin{itemize}
 	\item \textbf{Class} modulo standard di QGis per i calcoli aritmetici elementari e alcuni calcoli statistici di base
@@ -80,7 +81,7 @@ Questo viene fatto di base con algoritmi generici per la maggior parte dei forma
 
 \subsection{Sistema dei plugin}
 Per aumentare lel funzionalità di QGis e scriptare alcune operazioni sono stati creati i plugin.
-Sono dei programmi dipendenti da QGis che implementano funzionalità non presenti nel programma di base o estendono il supporto delle funzioni esistenti o i tipi di file supportati. Questo permette di utilizzare formati di file proprietari o concatenare operazioni da eseguire sui dati in ingresso.
+Sono dei programmi dipendenti da QGis che implementano funzionalità non presenti nel programma di base o estendono il supporto delle funzioni esistenti o i tipi di file supportati.
 
 \subsubsection{Plugin per formati di file}
 Vengono utilizzati per elaborare dati grezzi altrimenti difficilmente manipolabili. 
