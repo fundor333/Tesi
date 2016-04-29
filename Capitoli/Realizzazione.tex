@@ -6,28 +6,40 @@
 %************************************************
 \chapter{Realizzazione}
 \label{cap:realizzazione}
-%************************************************
 
+Il progetto è stato realizzato attraverso la divisione in subproblemi. Questo permette la sostituzione di una componente con un'altra in modo rapido ed sicuro in quanto viene a essere modificata solo la parte del codice interessata dall'operazione e non tutte le altre componenti, che rimangono invariate. 
+
+Questo ha portato anche alla ricerca di alcune librerie per eseguire le operazioni necessarie alle funzioni scelte.
+
+\section{Divisione in sottoproblemi}
+Per semplificare lo sviluppo di questa applicazione e il suo sviluppo è stato diviso il progetto in quattro componenti indipendenti che dialogano tra di loro, in modo da rendere più isolate le varie componenti, rendendole meno soggette a errori non previsti. 
+Queste si dividono in:
+\begin{itemize}
+\item Interfaccia grafica
+\item Lettura dei file in ingresso
+\item Gestione ed elaborazione dei dati
+\item Scrittura dei file in uscita
+\end{itemize}
+
+Questa strutturazione permette anche il riciclo del codice utilizzato per risolvere i sottoproblemi in altri progetti con la stessa necessità o la facile estensione del plugin in un secondo momento
+
+\subsection{Interfaccia grafica}
+Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente. Questo, solitamente, viene fatto in due modi:
+\begin{itemize}
+
+\item Attraverso l'uso di un \textbf{terminale} in cui vengono passati dei comandi che eseguono le operazioni richieste e mostra a schermo tutti i dati dei comandi eseguiti. Questo però obbliga l'utente a sapere i comandi necessari alla esecuzione dei task e ritorna a schermo dati di poco interesse per l'utente medio, molto utile invece se sei un programmatore e vuoi controllare come procedono i vari passi dei comandi eseguiti e permette di vedere subito ove avvengono gli errori e cosa li generano. 
+
+\item Attraverso l'uso di una \textbf{interfaccia grafica o GUI} in cui viene selezionato, attraverso l'uso di bottoni, menu e interuttori le funzioni che si vogliono eseguire e si danno i file in input con un selettore grafico. Permette all'utente di non interessarsi a come è stato realizzata l'operazione richiesta, di non cunsultare guide e manuali con gli elenchi dei comandi disponibili e di ricevere a schermo solo le informazioni di cui è realmente interessato. Oltre a essere la scelta più pratica per un nuovo utente è anche quella che da al programmatore che sviluppa questa applicazione la maggior libertà e indipendenza. Infatti la presenza di una grafica comune tra aggiornamenti diversi permette al programmatore di riscrivere interamente i comandi che vengono eseguiti al di sotto dell'interfaccia senza dover avvisare l'utente del cambiamento dei comandi all'interno del terminale.
+
+\end{itemize}
+
+
+
+\subsubsection{Qt4}
+\subsection{Gestione input}
+\subsection{Gestione dati}
+\subsubsection{Grass}
+\subsubsection{Osgeo}
+\subsection{Gestione output}
 \section{Librerie scelte}
 
-\subsection{Qt4}
-
-\subsection{Grass}
-
-\subsection{Osgeo}
-
-\section{Interfaccia grafica}
-
-\subsection{Scelte implementative}
-
-\section{Gestione input}
-
-\subsection{Scelte implementative}
-
-\section{Gestione dati}
-
-\subsection{Scelte implementative}
-
-\section{Gestione output}
-
-\subsection{Scelte implementative}
