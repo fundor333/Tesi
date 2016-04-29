@@ -27,7 +27,7 @@
   URL                      = {http://www.qgis.org/it/}
 }
 
-@Link{site.cc3,
+@Link{site:cc3,
   URL                      = {http://creativecommons.org/licenses/by-sa/3.0/}
 }
 
@@ -37,4 +37,3 @@
   School                   = {Università Ca Foscari Venezia},
   Year                     = {2013/2014}
 }
-
