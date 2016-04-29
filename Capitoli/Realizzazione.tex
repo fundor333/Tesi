@@ -37,11 +37,18 @@ Per come è strutturato QGis è possibile avere entrambi implementati nel plugin
 
 In particolare in questa applicazione è stata implementata l'interfaccia grafica in quanto risulta molto più adatta all'uso effettivo dell'applicazione. 
 
-% TODO inserire qui immagine
+% TODO inserire qui immagine della gui
 
-
+Infatti come si vede nell'immagine [link immagine] per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
 
 \subsubsection{Qt4}
+
+Le librerie grafiche per Python\footnote{Il linguaggio in cui è stato scritto il plugin} sono molte e varie ma la scelta è stata abbastanza facile: QT.
+
+Questa scelta è stata dettata dal desiderio di ridurre al minimo le dipendenze esterne dal plugin. Questo comporta l'utilizzo preferenziale delle librerie utilizzate da QGis per semplificare l'installazione delle dipendenze. In particolare, con QGis è stato necessario scegliere anche la versione di QT con cui sviluppare il plugin. La scelta è stata fatta su QT4 ovvero la funzione supportata dalla versione 2.0 in poi di QGis.  Questo permette un enorme supporto di versioni di QGis da parte del plugin. 
+
+La versione QT5 che verrà impiegata per le future versioni di QGis è già interamente supportata dall'applicazione. Questo è stato possibile attraverso un attento sviluppo attraverso funzioni non deprecate e controllo continuo delle nuove funzionalità di QT5 e delle modifiche che questa fa nel funzionamento complessivo in modo di essere già compatibile quando sarà necessario passare a QT5 in quanto non sarà più prerequisito di QGis.
+
 \subsection{Gestione input}
 \subsection{Gestione dati}
 \subsubsection{Grass}
