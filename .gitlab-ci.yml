@@ -1,5 +1,5 @@
 compile_pdf:
-  image: tianon/latex
+  image: blang/latex
   script:
     - latex Tesi.tex
     - bibtex Tesi.tex
