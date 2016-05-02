@@ -1,7 +1,10 @@
 compile_pdf:
   image: tianon/latex
   script:
-    - latexmk -pdf Tesi.tex
+    - latex Tesi.tex
+    - bibtex Tesi.tex
+    - latex Tesi.tex
+    - latex Tesi.tex
   artifacts:
     paths:
       - Tesi.pdf
