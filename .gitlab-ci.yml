@@ -2,9 +2,9 @@ compile_pdf:
   image: blang/latex
   script:
     - latex Tesi.tex
-    - bibtex Tesi.tex
-    - latex Tesi.tex
-    - latex Tesi.tex
+#    - bibtex Tesi.tex
+#    - latex Tesi.tex
+#    - latex Tesi.tex
   artifacts:
     paths:
       - Tesi.pdf
