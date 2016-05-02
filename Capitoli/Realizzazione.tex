@@ -37,7 +37,7 @@ Per come è strutturato QGis è possibile avere entrambi implementati nel plugin
 
 In particolare in questa applicazione è stata implementata l'interfaccia grafica in quanto risulta molto più adatta all'uso effettivo dell'applicazione. 
 
-% TODO inserire qui immagine della gui
+%TODO inserire qui immagine della gui
 
 Infatti come si vede nell'immagine [link immagine] per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
 
@@ -51,10 +51,25 @@ La versione QT5 che verrà impiegata per le future versioni di QGis è già inte
 
 Ovviamente si poteva avere lo stesso risultato utilizzando altre librerie grafiche esterne o quelle di pyhton ma è stato scelto QT anche per avere una coerenza grafica tra le varie finestre che vanno ad aprirsi. Infatti se venisse utilizzata un altra libreria grafica sarebbe necessario una rielaborazione della grafica standard della libreria in modo che si comporti coerentemente rispetto a QT per ogni sistema operativo, il che porterebbe a una complicazione del codice non necessaria.
 
-\subsection{Gestione input}
-\subsection{Gestione dati}
+\subsection{Leggere e scrivere i dati}
+
+\subsubsection{Input}
+Per una questione di semplicità è stato deciso di passare i dati in input come file, in modo che possano essere facilmente condivisi. Per fare ciò è stato necessario fare una ricerca sui tipi di file utilizzati per i dati georefernziati.
+
+Per questo motivo è stata fatta una ricerca sui formati di file supportati nativamente da QGis che fossero di tipo raster\footnote{Unico tipo di dati che il plugin accetta in input in quanto è l'unica struttura dati adatta a contenere i dati che ci servono per l'elaborazione} e quali fossero supportati attraverso plugin esterni.
+
+E' stata quindi usata una delle funzioni del core di QGis per il riconoscimento automatico dei formati riconosciuti da QGis in modo da eseguire l'elaborazione del singolo file col driver corrispondente installato migliore.
+
+Questo permette di avere un plugin più elastico, in quanto non necessita di aggiornamento se viene aggiunto il supporto a un tipo aggiuntivo di file per QGis ma recupera direttamente dalle configurazioni di QGis i dati necessari per la lettura, decodifica e rielaborazione del file in questione.
+
+In oltre, il codice di gestione per i file in input è integrato nell'interfaccia grafica in modo da rendere semplice l'inserimento di dati all'interno del programma stesso. Supporta comunque l'utilizzo attraverso il terminale di QGis anche se ne è sconsigliato l'uso ai meno esperti e a chi si approccia per la prima volta a questo plugin.
+%TODO inserire immagine apertura file
+
+Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
+Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente dall'utente.
+
+\subsubsection{Output}
+\subsection{Elaborazione dati}
 \subsubsection{Grass}
 \subsubsection{Osgeo}
 \subsection{Gestione output}
-\section{Librerie scelte}
-
