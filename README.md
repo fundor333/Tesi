@@ -1,3 +1,6 @@
+
+[![build status](https://gitlab.com/SamarcandaProject/SamarcandaProject.example.io/badges/master/build.svg)](https://gitlab.com/SamarcandaProject/SamarcandaProject.example.io/commits/master)
+
 # README #
 
 This README would normally document whatever steps are necessary to get your application up and running.
