@@ -1,16 +1,16 @@
 sudo: required
 dist: trusty
 before_install:
-- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-full python-pygments gnuplot
 script:
 - mkdir _build
-- pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build Tesi.tex
+- latex Tesi.tex
 deploy:
   provider: releases
   api_key:
     secure: "xMbnK3i2iCREesM6fWUGRThcqxMaO7aiPQnZdeAd0IGe7E75d7y/TvC8OE5Hq0Qfh5i7BH+dHHTuNoSka96o6VZFp9d8Hv7mRa8Xo9B0Na3N7jEnT858TwFPcbnZQQNO9gqLxmGgMcITPYvtYiVQUJ4Vm3juLGsCu3RMzYX6jfOg35COg7iMAn4X2D6+7fKvg9UFTjzdo/Jl3v4oxYqH14RfVBBTCozDyzmgyemw7mrU1e4hp7u57Pqod7e/OiU76Oy1NzvirIEfqxhb+mwMarmiQyL26RRz6AEWwwXBfTr+QgWfUYRxLTdPkKBVNUGRA/dhPeF4KDmPZ6O8PoI3s/GJDiyoL2fQLNXPrWFszX5aDdmYySK1vK5zAqBA1crNwB17TmjhhUakghui/y4l1XQdL1Bb4PO3stt0zglYffPmssDFrun5jUKaIxC+ZOP9nHqnb1J0nERBu+Ie4MfsoROfvgOc+1LJ5El64l9C3RqsQlR2JLY8516EGQzmysxTyLhRijZJbjom8LE3wDNwGy8GSVSglgJLQNK2KBfyR7VjZLjZ6I5rbKe/MKTokncD4dgZ+GmPsUwY6LZ5qp/Z7Bm6x9iOtEZLDeljjId1QmVKRaxg9FWJYbwpDGEF1VOOMHPbEsRHXkFv/7ghzGwbHiIIrVNPJ+auTILit8PMRGQ="
   file:
-  - _build/Tesi.pdf
+  - Tesi.pdf
   skip_cleanup: true
   on:
     tags: true
