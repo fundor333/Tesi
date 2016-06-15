@@ -1,5 +1,5 @@
+[![build status](https://gitlab.com/fundor333/tesi/badges/master/build.svg)](https://gitlab.com/fundor333/tesi/commits/master)
 
-[![build status](https://gitlab.com/SamarcandaProject/SamarcandaProject.example.io/badges/master/build.svg)](https://gitlab.com/SamarcandaProject/SamarcandaProject.example.io/commits/master)
 
 # README #
 
