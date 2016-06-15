@@ -66,9 +66,16 @@ In oltre, il codice di gestione per i file in input è integrato nell'interfacci
 %TODO inserire immagine apertura file
 
 Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
-Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente dall'utente.
+Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente nel campo senza aprire la finestra per la scelta della cartella.
 
 \subsubsection{Output}
+Come per l'input, l'output può essere gestito in due modi: attraverso il terminale python o via interfaccia grafica.
+
+In entrambi i casi è possibile indicare il path e il nome del file di output e il formato in cui lo si vuole salvare.
+Il formato è scelto dall'utente da un elenco di formati disponibili nativamente da QGis con l'aggiunta dei formati disponibili da i plugin installati\footnote{Solo se questi registrano il formato nell'elenco nativamente presente in QGis come indicato dalle API per sviluppatori.} con driver per la scrittura. Per come è costruito QGis è possibile che alcuni formati non siano disponibili per la scrittura in quanto i driver sono di solo lettura. In questo caso, indipendentemente dalla scelta di utilizzare il terminale o una gui il plugin lancerà una finestra con l'errore corrispondente all'errore lanciato dal driver. Questo viene fatto in quanto è possibile che i formati in input non possono essere correttamente codificati nel formato di output scelto.
+
+In ogni caso si consiglia che il formato di input e output dei file sia lo stesso per avere il minor problemi dati dalla decodifica e codifica degli stessi. 
+
 \subsection{Elaborazione dati}
 \subsubsection{Grass}
 \subsubsection{Osgeo}
