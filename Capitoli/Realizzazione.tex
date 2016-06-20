@@ -71,7 +71,7 @@ In oltre, il codice di gestione per i file in input è integrato nell'interfacci
 Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
 Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente nel campo senza aprire la finestra per la scelta della cartella.
 
-\\TODO Spiegare la lettura dei raster e il loro salvataggio dentro enuple
+%TODO Spiegare la lettura dei raster e il loro salvataggio dentro enuple
 
 \subsubsection{Output}
 Come per l'input, l'output può essere gestito in due modi: attraverso il terminale python o via interfaccia grafica.
@@ -83,7 +83,7 @@ In ogni caso si consiglia che il formato di input e output dei file sia lo stess
 
 Nel casos i driver non vengono registrati all'interno dell'elenco dei driver per l'output di QGis seguendo le api sarà necessario implementarle sequendole per poterle utilizzare all'interno del plugin.
 
-\\TODO Spiegare la scrittura di raster
+%TODO Spiegare la scrittura di raster
 \subsection{Elaborazione dati}
 Una volta ricevuti i dati in input si pensa a elaborarli. Per farlo è stato necessario generare una struttura dati idonea ai formati in input. E' stato quindi deciso di implementare l'elaborazione attraverso la struttura dati raster. A sua volta i dati geomorfici del raster sono all'interno di una matrice, che è l'oggetto con cui il plugin esegue le operazioni.
 
@@ -92,5 +92,11 @@ In oltre è stato necessario trovare una o più librerie che implementassero le 
 \subsubsection{Grass}
 Plugin standard che da accesso a tutte le funzionalità avanzate di GRASS GIS. Dal punto di vista tecnico non è una libreria ma un insieme di librerie che gestiscono raster e elaborazioni avanzate dei dati. Essendo di facile installazione e, in alcune versioni, distribuito direttamente con QGis è un ottimo sistema per avere facilmente una libreria per l'elaborazione dei raster.
 
+Il plugin descritto in questa tesi richiede l'istallazione di Grass per il suo corretto funzionamento anche se non usa direttamente la libreria di Grass. 
+
+La libreria di Grass non è stata usata direttamente ma solo una delle sue componenti per avere maggiore libertà nei formati disponibili di file. Infatti, a meno di un ridotto numero di plugin, non è possibile aumentare i tipi di file supportati da Grass in quanto si limitano solo ai formati forniti con l'installazione standard di QGis.
+
 \subsubsection{Osgeo}
-\subsection{Gestione output}
+Una delle librerie utilizzate da Grass. Formalmente è una libreria per il supporto di operazioni su raster, in pratica è un porting di Numpy per i formati di file contenenti dati georeferenziati.
+
+Nel nostro caso è stato utilizzato per elaborare i dati dei file raster.
