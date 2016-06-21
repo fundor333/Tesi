@@ -7,8 +7,23 @@
 \chapter{Descrizione dell'argomento}
 \label{cap:descrizione}
 %************************************************
-\section{Problema da risolvere} Lo scopo di questa tesi è quello di calcolare in
-modo corretto l'erosione del territorio nell'area geografica scielta.
+\section{Problema da risolvere} 
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta.
+La tesi \cite{tesi:ambientale} propone quattro soluzioni per la rappresentazione grafica dell'erosione annua del terreno.
+
+\subsection{Software di grafic design}
+Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro. In oltre questo metodo non permette l'automatizzazione ma necessita comunque di una componente umana che realizzi il modello 3D. 
+
+Per questo motivo non è stato preso in esame questa soluzione. Infatti la possibilità di calcolare e visualizzare l'erosione del terreno deve essere facilmente automatizzabile e i risultati forniti in tempi brevi.
+
+\subsection{Strumenti di visualizzazione 3D}
+E' possibile utilizzare strumenti di visualizzazione di modelli 3D specifici per la visualizzazione di ambienti reali. Questo permette la visualizzazione dell'area presa in esame confrontandola anche con il terreno circostante ma prevede che sia già stato generato un file nel formato leggibile dal programma scelto.
+
+Questo ripropone i problemi dati dalla scelta di un software di grafic design in quanto prevede che ci sia un software o un "tecnico" che generi il file nel formato richiesto rendendo l'applicativo non automatizzabile.
+
+\subsection{Programmazione}
+\subsection{Desktop QGis}
+
 Questo è stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il
 modello proposto è quello indicato in \cite[p.~37]{tesi:ambientale}}
 
