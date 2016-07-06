@@ -8,8 +8,53 @@
 \label{cap:descrizione}
 %************************************************
 \section{Problema da risolvere} 
-Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta.
-La tesi \cite{tesi:ambientale} propone quattro soluzioni per la rappresentazione grafica dell'erosione annua del terreno.
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
+
+Il problema puo' essere riassunto nell'equazione 
+\begin{equation} \label{eq:main}
+A = R * K * LS * C * P
+\end{equation}
+
+in cui
+\begin{itemize}
+	\item \textbf{A} corrispondente alla perdita di suolo annua
+	\item \textbf{R} erosività delle precipitazioni
+	\item \textbf{K} erodibilità del suolo
+	\item \textbf{LS} rapporto tra la lunghezza e la pendenza
+	\item \textbf{C} fattore di copertura del suolo
+	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione espressi sotto forma di matrice
+\end{itemize}
+
+Tutti questi dati sono forniti sotto forma di file che vengono poi elaborati per ottenere il raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1.
+
+\subsection{R o erosività delle precipitazioni}
+Il parametro R rappresenta quanto le precipitazioni in una determinata area geografica. Viene fatto attraverso dati pluviometrici. Questi ultimi non sono dati con risoluzione temporale pari a un singolo evento meteorico ma da equazioni semplificate per ottenere il parametro da i dati di precipitazioni annue.
+
+\begin{equation}\label{eq:r}
+	R = \sum_{i=1}^{n} \frac{p_i}{n}
+\end{equation}
+In questa equazione $n$ corrisponde il numero di anni di cui si ha lo storico pluviometrico mentre $p_i$ corrisponde alle precipitazioni dell'$i$-esimo anno. Questo permette una approssimazione utilile per il nostro problema.
+
+\subsection{K o erodibilità del suolo}
+Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
+
+Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regrassione matematica su dati sulla tessitura del terreno dell'area interessata. Questo a permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
+
+\begin{equation}\label{eq:k}
+	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
+\end{equation}
+
+\subsection{LS rapporto tra lunghezza e pendenza}
+LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$ definiti per convenzione. 
+\begin{equation}\label{eq:ls}
+	LS = \left(  \dfrac{A}{22,13} \right)^m
+	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
+\end{equation}
+
+
+\section{Possibili risoluzioni}
+La tesi \cite{tesi:ambientale} propone quattro soluzioni per il problema dell'erosione annua del terreno.
+Sono state tutte prese in esame prima di iniziare lo sviluppo del plugin e qui riportiamo vantaggi, svantaggi e problemi legati a queste soluzioni.
 
 \subsection{Software di grafic design}
 Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro. In oltre questo metodo non permette l'automatizzazione ma necessita comunque di una componente umana che realizzi il modello 3D. 
@@ -26,29 +71,15 @@ Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster d
 
 Questo risolve il problema dell'automatizzazione del processo, permettendo così di creare un servizio di elaborazione dei dati autonomo e indipendente dall'essere umano, ma non realizza l'altro punto importante del progetto: non permette di visualizzare i dati in input ne in output.
 
+In oltre richiede un notevole lavoro in quanto questa soluzione necessita di scrivere un programma per intero, gestire le GUI e tutta la gestione dei formati di file solo per avere l'espressione \ref{eq:main} esequita.
+
 \subsection{Desktop QGis}
 
-Questo è stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il modello proposto è quello indicato in \cite[p.~37]{tesi:ambientale}}
+Software che permette di visualizzare e elaborare raster e altri formati di file geomorfici. Molto usato e supporta, nativamente o attraverso plugin installabili, la quasi totalità dei formati di file esistenti. In oltre permette, attraverso codice python, c e c++, di estendere le funzionalità del programma stesso.
 
-\begin{equation} \label{eq:main}
-A = R * K * LS * C * P
-\end{equation}
+Il vantaggio fondamentale di questo sistema è l'estremo supporto di formati diversi e la presenza di un motore grafico che permette la visualizzazione corretta dei dati, con supporto con i formati di file per mappe e con i servizi online come google maps. La sua installazione, in oltre, contiene alcune delle librerie più complete per quanto riguarda le operazioni sui raster e array.
 
-in cui
-\begin{itemize}
-\item \textbf{A} corrispondente alla perdita di suolo annua
-\item \textbf{R} erosività delle precipitazioni
-\item \textbf{K} erodibilità del suolo
-\item \textbf{LS} rapporto lunghezza pendenza
-\item \textbf{C} fattore di copertura del suolo
-\item \textbf{P} misure di prevenzione dell'erosione
-\end{itemize}
-
-Questo modello è stato quindi applicato utilizzando i dati in formato di layer raster attraverso l'applicativo QGis.
-Questo viene fatto in quanto lo standard \textit{de facto} per questa tipologia di dato è il layer raster.
-
-
-In particolare questo modello viene utilizzato per calcolare anno per anno l'erosione del territorio interessato avendo variazioni di dati in base all'anno o assumendo come invarianti negli anni i dati inseriti in imput.
+Invece comporta anche dei diffetti. Limita infatti sia i linguaggi\footnote{E' possibile sviluppare solo per Python, C e C++ i plugin anche se consigliano di usare Python per una questione di velocità di sviluppo} in cui è possibile sviluippare un plugin o estensione e ha solo alcune delle maggiori librerie diponibili.
 
 \section{QGis}
 
@@ -61,6 +92,11 @@ Altro dettaglio molto utile di QGis è il fatto che un programma multi piattafor
 In oltre, QGis supporta la quasi totalità dei formati open source utilizzati per la codifica per dati geomorfici e georeferenziati in modo nativo mentre i formati di file che non supporta sono utilizzabili attraverso plugin gratuiti disponibili online.
 
 \subsection{Descrizione dei tipi di dati supportati}
+
+Per risolvere il problema presentato è necessario passare al programma i dati. Sono devono essere già presenti all'interno dell'elaboratore o possono essere letti da un flusso in ingresso proveniente da sensori o da altri elaboratori.
+
+Per il nostro problema i dati vengono forniti sotto forma di file o di database in quanto possono necessetira di una pre elaborazione e una formattazione, e di conseguenza non è conveniente l'utilizzo di un flusso. In oltre è possibile che i dati non vengano da un unico sensore in quanto sono dati legati a composizione geologica e a piogge in determinate aree e, di conseguenza, che necessitano di multipli sensori.
+
 
 I formati di dati possono essere divisi in tre macrocategorie in base a come vengono forniti:
 \begin{itemize}
