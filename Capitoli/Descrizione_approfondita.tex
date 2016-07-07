@@ -89,8 +89,23 @@ Fattore rappresentante misure di controllo quali sistemi di drenaggio, terrazzam
 Questo viene rappresentato sotto forma di un coefficiente a dimensionale compreso tra $0$ e $1$.
 
 \section{Possibili risoluzioni}
-La tesi \cite{tesi:ambientale} propone quattro soluzioni per il problema dell'erosione annua del terreno.
-Sono state tutte prese in esame prima di iniziare lo sviluppo del plugin e qui riportiamo vantaggi, svantaggi e problemi legati a queste soluzioni.
+La tesi \cite{tesi:ambientale} propone quattro sistemi per applicare e visualizzare l'applicazione del modello RUSTLE per l'area di terreno indicato.
+
+Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati vagliati e valutati secondo le nostre esigenze. Tutte questi sistemi hanno dei pregi e dei difetti e sono stati segnalati in base alle nostre necessità
+
+\begin{itemize}
+	
+	\item \textit{Ripetibilità} il sistema scelto deve essere facilmente ripetibile.
+	
+	\item \textit{Veloce} il sistema scelto deve eseguire le operazioni per l'elaborazione e la visualizzazione deve rimanere in tempi ristretti anche se la mole di dati risulta enorme.
+	
+	\item \textit{Indipendente} il sistema scelto deve essere indipendente dal sistema operativo, in modo da poter essere utilizzato su qualunque dispositivo\footnote{Si considerano solo computer, i dispositivi mobili non sono \textit{espressamente} richiesti}.
+	
+	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello RUSLE.
+	
+	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
+	
+\end{itemize}
 
 \subsection{Software di grafic design}
 Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro. In oltre questo metodo non permette l'automatizzazione ma necessita comunque di una componente umana che realizzi il modello 3D. 
