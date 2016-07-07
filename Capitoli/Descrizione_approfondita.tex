@@ -24,7 +24,7 @@ in cui
 	\item \textbf{K} erodibilità del suolo
 	\item \textbf{LS} rapporto tra la lunghezza e la pendenza
 	\item \textbf{C} fattore di copertura del suolo
-	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione espressi sotto forma di matrice
+	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione 
 \end{itemize}
 
 Tutti questi dati sono forniti sotto forma di file che vengono poi elaborati per ottenere il raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1.
@@ -79,6 +79,14 @@ Il fattore C è un rapporto tra la perdita di suolo in precise condizioni di cop
 Attualmente sono state fornite quarantaquattro classi di copertura di terreno con altrettanti valori del fattore C.
 
 E' possibile anche utilizzare i dati provenienti da sensori di tipo AVHRR\footnote{Advance Very High Resolution Radiometer} con cui si calcola l'indice  NDVI\footnote{Normalized Difference Vegetation Index} che varia tra $1$ e $-1$
+
+\begin{equation}\label{eq:c}
+	C=\exp\left( -\alpha \dfrac{NDVI}{\beta -NDVI} \right) 
+\end{equation}
+
+\subsection{P o prevenzione dell'erosione}
+Fattore rappresentante misure di controllo quali sistemi di drenaggio, terrazzamenti e sistemi specifici di coltivazione. 
+Questo viene rappresentato sotto forma di un coefficiente a dimensionale compreso tra $0$ e $1$.
 
 \section{Possibili risoluzioni}
 La tesi \cite{tesi:ambientale} propone quattro soluzioni per il problema dell'erosione annua del terreno.
