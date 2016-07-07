@@ -105,24 +105,35 @@ Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati
 	
 	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
 	
+	\item{Visuabilizzabile} il sistema deve avere un output dati facilmente leggibile per l'essere umano attraverso il sistema stesso o un software specifico.
+	
 \end{itemize}
 
 \subsection{Software di grafic design}
-Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro. In oltre questo metodo non permette l'automatizzazione ma necessita comunque di una componente umana che realizzi il modello 3D. 
+Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare l'ambiente e le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro.
 
-Per questo motivo non è stato preso in esame questa soluzione. Infatti la possibilità di calcolare e visualizzare l'erosione del terreno deve essere facilmente automatizzabile e i risultati forniti in tempi brevi.
+\begin{itemize}
+	\item{Visuabilizzabile} Molto facile da visualizzare e navigare. Questo risulta il migliore sistema esaminato per vedere gli effetti dell'erosione nel terreno preso in esame
+	
+	\item{Non ripetibile e complesso} Il sistema prevede che l'utente abbia una buona conoscenza di software di modellazione 3D e deve calcolare tutta l'erosione in modo autonomo.
+	
+	\item{Lento e non automatizzabile} Il sistema prevede la presenza di uno o più persone che sviluppino una mappa 3D. Anche l'utilizzo di una mappa 3D pre-esistente comunque porta il lavoro a tempi superiori a venti minuti e risulta infattibile senza la presenza della persona. 
+\end{itemize}
 
-\subsection{Strumenti di visualizzazione 3D}
-E' possibile utilizzare strumenti di visualizzazione di modelli 3D specifici per la visualizzazione di ambienti reali. Questo permette la visualizzazione dell'area presa in esame confrontandola anche con il terreno circostante ma prevede che sia già stato generato un file nel formato leggibile dal programma scelto.
 
-Questo ripropone i problemi dati dalla scelta di un software di grafic design in quanto prevede che ci sia un software o un "tecnico" che generi il file nel formato richiesto rendendo l'applicativo non automatizzabile.
 
 \subsection{Programmazione}
 Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster di output. Per esempio è possibile farlo con Mathlab, R o Python con tempi di esecuzione diverso in base al linguaggio e a quanto è stato ottimizzato il codice che esegue queste operazioni. 
 
-Questo risolve il problema dell'automatizzazione del processo, permettendo così di creare un servizio di elaborazione dei dati autonomo e indipendente dall'essere umano, ma non realizza l'altro punto importante del progetto: non permette di visualizzare i dati in input ne in output.
+\begin{itemize}
+	\item{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo anche automatico.
+	
+	\item{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così molte dipendenze esterne non desiderabili.
+	
+	\item{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare idati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
+\end{itemize}
 
-In oltre richiede un notevole lavoro in quanto questa soluzione necessita di scrivere un programma per intero, gestire le GUI e tutta la gestione dei formati di file solo per avere l'espressione \ref{eq:main} esequita.
+Questo sistema riesce a essere quello più adattabile alle nostre necessità ma rischia di diventare un accumulo di dipendenze esterne se sviluppato male.
 
 \subsection{Desktop QGis}
 
