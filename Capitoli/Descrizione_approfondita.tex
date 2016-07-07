@@ -10,6 +10,8 @@
 \section{Problema da risolvere} 
 Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
 
+Il modello viene definito col nome RUSLE
+
 Il problema puo' essere riassunto nell'equazione 
 \begin{equation} \label{eq:main}
 A = R * K * LS * C * P
@@ -22,7 +24,7 @@ in cui
 	\item \textbf{K} erodibilità del suolo
 	\item \textbf{LS} rapporto tra la lunghezza e la pendenza
 	\item \textbf{C} fattore di copertura del suolo
-	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione espressi sotto forma di matrice
+	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione 
 \end{itemize}
 
 Tutti questi dati sono forniti sotto forma di file che vengono poi elaborati per ottenere il raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1.
@@ -33,7 +35,13 @@ Il parametro R rappresenta quanto le precipitazioni in una determinata area geog
 \begin{equation}\label{eq:r}
 	R = \sum_{i=1}^{n} \frac{p_i}{n}
 \end{equation}
-In questa equazione $n$ corrisponde il numero di anni di cui si ha lo storico pluviometrico mentre $p_i$ corrisponde alle precipitazioni dell'$i$-esimo anno. Questo permette una approssimazione utilile per il nostro problema.
+In questa equazione 
+\begin{itemize}
+	\item \textit{n} corrisponde al numero di anni in cui si ha lo storico pluviometrico
+	\item \textit{$p_i$} corrisponde alle precipitazioni dell'$i$-esimo anno.
+\end{itemize}
+
+Questo permette una approssimazione utilile per l'applicazione del modello RUSLE.
 
 \subsection{K o erodibilità del suolo}
 Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
@@ -43,6 +51,8 @@ Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni
 \begin{equation}\label{eq:k}
 	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
 \end{equation}
+In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm
+
 
 \subsection{LS rapporto tra lunghezza e pendenza}
 LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$ definiti per convenzione. 
@@ -51,10 +61,51 @@ LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0
 	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
 \end{equation}
 
+Che viene modificata nella \ref{eq:ls:edit} per ottenere una equazione che meglio rappresenti superfici con elevata complessità topografica e/o alta variabilità di pendenze.
+
+\begin{equation}\label{eq:ls:edit}
+LS=\left( \dfrac{flowacc * cellsize}{22,13}\right)^{04} \left( -1,5+\dfrac{17}{1+ e^{2,3-6,1*\sin{\alpha}}} \right) 
+\end{equation}
+
+In cui 
+\begin{itemize}
+	\item \textit{flowacc} corrisponde all' UCA  o numero di pixel tramite i quali l'acqua defluisce nell'area precisa di pixel
+	\item \textit{cellsize} dimensione dei pixel
+	\item \textit{$\alpha$} pendenza dell'area
+\end{itemize}
+
+\subsection{C o fattore di copertura del suolo}
+Il fattore C è un rapporto tra la perdita di suolo in precise condizioni di copertura e la perdita di suolo nel caso il terreno sia privo di qualunque protezione.
+Attualmente sono state fornite quarantaquattro classi di copertura di terreno con altrettanti valori del fattore C.
+
+E' possibile anche utilizzare i dati provenienti da sensori di tipo AVHRR\footnote{Advance Very High Resolution Radiometer} con cui si calcola l'indice  NDVI\footnote{Normalized Difference Vegetation Index} che varia tra $1$ e $-1$
+
+\begin{equation}\label{eq:c}
+	C=\exp\left( -\alpha \dfrac{NDVI}{\beta -NDVI} \right) 
+\end{equation}
+
+\subsection{P o prevenzione dell'erosione}
+Fattore rappresentante misure di controllo quali sistemi di drenaggio, terrazzamenti e sistemi specifici di coltivazione. 
+Questo viene rappresentato sotto forma di un coefficiente a dimensionale compreso tra $0$ e $1$.
 
 \section{Possibili risoluzioni}
-La tesi \cite{tesi:ambientale} propone quattro soluzioni per il problema dell'erosione annua del terreno.
-Sono state tutte prese in esame prima di iniziare lo sviluppo del plugin e qui riportiamo vantaggi, svantaggi e problemi legati a queste soluzioni.
+La tesi \cite{tesi:ambientale} propone quattro sistemi per applicare e visualizzare l'applicazione del modello RUSTLE per l'area di terreno indicato.
+
+Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati vagliati e valutati secondo le nostre esigenze. Tutte questi sistemi hanno dei pregi e dei difetti e sono stati segnalati in base alle nostre necessità
+
+\begin{itemize}
+	
+	\item \textit{Ripetibilità} il sistema scelto deve essere facilmente ripetibile.
+	
+	\item \textit{Veloce} il sistema scelto deve eseguire le operazioni per l'elaborazione e la visualizzazione deve rimanere in tempi ristretti anche se la mole di dati risulta enorme.
+	
+	\item \textit{Indipendente} il sistema scelto deve essere indipendente dal sistema operativo, in modo da poter essere utilizzato su qualunque dispositivo\footnote{Si considerano solo computer, i dispositivi mobili non sono \textit{espressamente} richiesti}.
+	
+	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello RUSLE.
+	
+	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
+	
+\end{itemize}
 
 \subsection{Software di grafic design}
 Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro. In oltre questo metodo non permette l'automatizzazione ma necessita comunque di una componente umana che realizzi il modello 3D. 
