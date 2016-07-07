@@ -10,6 +10,8 @@
 \section{Problema da risolvere} 
 Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
 
+Il modello viene definito col nome RUSLE
+
 Il problema puo' essere riassunto nell'equazione 
 \begin{equation} \label{eq:main}
 A = R * K * LS * C * P
@@ -33,7 +35,13 @@ Il parametro R rappresenta quanto le precipitazioni in una determinata area geog
 \begin{equation}\label{eq:r}
 	R = \sum_{i=1}^{n} \frac{p_i}{n}
 \end{equation}
-In questa equazione $n$ corrisponde il numero di anni di cui si ha lo storico pluviometrico mentre $p_i$ corrisponde alle precipitazioni dell'$i$-esimo anno. Questo permette una approssimazione utilile per il nostro problema.
+In questa equazione 
+\begin{itemize}
+	\item \textit{n} corrisponde al numero di anni in cui si ha lo storico pluviometrico
+	\item \textit{$p_i$} corrisponde alle precipitazioni dell'$i$-esimo anno.
+\end{itemize}
+
+Questo permette una approssimazione utilile per l'applicazione del modello RUSLE.
 
 \subsection{K o erodibilità del suolo}
 Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
@@ -43,6 +51,8 @@ Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni
 \begin{equation}\label{eq:k}
 	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
 \end{equation}
+In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm
+
 
 \subsection{LS rapporto tra lunghezza e pendenza}
 LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$ definiti per convenzione. 
@@ -51,6 +61,24 @@ LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0
 	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
 \end{equation}
 
+Che viene modificata nella \ref{eq:ls:edit} per ottenere una equazione che meglio rappresenti superfici con elevata complessità topografica e/o alta variabilità di pendenze.
+
+\begin{equation}\label{eq:ls:edit}
+LS=\left( \dfrac{flowacc * cellsize}{22,13}\right)^{04} \left( -1,5+\dfrac{17}{1+ e^{2,3-6,1*\sin{\alpha}}} \right) 
+\end{equation}
+
+In cui 
+\begin{itemize}
+	\item \textit{flowacc} corrisponde all' UCA  o numero di pixel tramite i quali l'acqua defluisce nell'area precisa di pixel
+	\item \textit{cellsize} dimensione dei pixel
+	\item \textit{$\alpha$} pendenza dell'area
+\end{itemize}
+
+\subsection{C o fattore di copertura del suolo}
+Il fattore C è un rapporto tra la perdita di suolo in precise condizioni di copertura e la perdita di suolo nel caso il terreno sia privo di qualunque protezione.
+Attualmente sono state fornite quarantaquattro classi di copertura di terreno con altrettanti valori del fattore C.
+
+E' possibile anche utilizzare i dati provenienti da sensori di tipo AVHRR\footnote{Advance Very High Resolution Radiometer} con cui si calcola l'indice  NDVI\footnote{Normalized Difference Vegetation Index} che varia tra $1$ e $-1$
 
 \section{Possibili risoluzioni}
 La tesi \cite{tesi:ambientale} propone quattro soluzioni per il problema dell'erosione annua del terreno.
