@@ -144,18 +144,28 @@ Software che permette di visualizzare e elaborare raster e altri formati di file
 	
 	\item{Automatizzabile} Se scritto correttamente il plugin può effettuare la task assegnata in modo automatico ricevendo i dati da un altro processo.
 	
-	\item{Visuabilizzabile} QGis dispone di un intero motore di renderig integrato che permette 
+	\item{Visuabilizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati georeferenziati.
+	
+	\item{Multipiattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
 \end{itemize}
+
+In oltre QGis risulta essere la prima scelta, come software, per l'analisi di dati geomorfici in ambito scientifico, per cui risulta naturale la scelta di sviluppare un plugin per questo applicativo.
 
 \section{QGis}
 
 QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
 
-In particolare sono state utilizzate le componenti di gestione input e output dei raster, il motore di calcolo e il sistema di rendering video. In oltre il programma supporta anche un sistema di plugin e scripting che aumenta le funzionalità del programma utilizzando codice esterno sviluppato dalla comunnity.
+Questo permette uno sviluppo continuo e slegato da esigenze commerciali evitando così obblighi di bilancio, rilasci effettuati solo per motivi di marcheting e dipendenze da ditte. Ogni individuo dotato di pc, connessione a internet e conoscenze di programmazione è in grado di aggiungere, rimuovere, migliorare funzionalità del programma e mandarle alla community. Quest'ultima dovrà quindi approvare le modifiche e applicarle al progetto e, così, dall'aggiornamento successivo, le modifiche saranno applicate su QGis.
 
-Altro dettaglio molto utile di QGis è il fatto che un programma multi piattaforma. Questo vuol dire che il programma è stato distribuito per più sistemi operativi\footnote{In questo caso per Android, Mac OS, Windows e Linux} e obbliga gli sviluppatori a scrivere plugin e script che siano anch'essi multipiattaforma. Questo permette l'utilizzo dei plugin e degli script per la creazione di funzioni automatizzate utilizzando le componenti già presenti in QGis o aggiungerne di nuove.
+Per questo progetto sono state utilizzate
+\begin{itemize}
+	\item \textit{Componenti di input e output} è possibile interfacciare il plugin scritto con il normale sistema di input/output di QGis ottenendo così un'interfaccia unica e coerente indipendentemente dal sistema operativo utilizzato.
+	\item \textit{Sistema di supporto di formati di file} Collegandosi al sistema di supporto dei formati di file è possibile utilizzare tutti i formati supportati dall'installazione di QGis.
+	\item \textit{Motore di calcolo} QGis comprende un pacchetto di operazioni standard sui file raster che sono utili per questo plugin.
+	\item \textit{Sistema di rendering a video dei dati} Il sistema permette di visualizzare i file a schermo in versione grafica. Questo può essere fatto con l'output dei dati ottenuti dal plugin.
+	\item \textit{Api di supporto per i plugin} Il sistema con cui si collega 
+\end{itemize}
 
-In oltre, QGis supporta la quasi totalità dei formati open source utilizzati per la codifica per dati geomorfici e georeferenziati in modo nativo mentre i formati di file che non supporta sono utilizzabili attraverso plugin gratuiti disponibili online.
 
 \subsection{Descrizione dei tipi di dati supportati}
 
