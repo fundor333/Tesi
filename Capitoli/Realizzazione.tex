@@ -71,7 +71,25 @@ In oltre, il codice di gestione per i file in input è integrato nell'interfacci
 Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
 Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente nel campo senza aprire la finestra per la scelta della cartella.
 
-%TODO Spiegare la lettura dei raster e il loro salvataggio dentro enuple
+Il file raster ricevuto in input viene quindi separato nelle sue componenti. Il file raster infatti è composto da due componenti: 
+\begin{itemize}
+	\item una matrice che contiene i dati di interesse di quel raster
+	\item una enupla legata ai dati della matrice
+\end{itemize}
+Questo meccanismo permette di avere dei dati che permettono di definire meglio i dati rappresentati nella matrice. Questi dati sono :
+
+\begin{itemize}
+	\item Numero di righe e colonne della matrice. Serve per avere la dimensione della matrice.
+	\item Coordinate spaziali. Danno la posizione georeferenziata per la costruzione della matrice.
+	\item Dimensioni della cella della matrice. Misura rappresentante la lunghezza e la larghezza dell'area di terreno i cui dati sono rappresentati dalla cella. Assieme alle coordinate spaziali serve a identificare l'area rappresentata dal file raster.
+	\item Tipo di dato. Contiene delle informazioni rispetto al tipo di dato contenuto nelle celle. Questo è uniformo per tutto il file raster.
+\end{itemize}
+
+Questi dati non sono sempre presenti all'interno del file raster in quanto alcuni formati hanno per definizione uno di questi campi fissati a un valore, per cui sta al driver di qgis leggere i file in modo corretto e ritornare un enupla contenente i dati necessari.
+
+Anche se presenti sempre non siamo interessati ai campi che specificano il software utilizzato per la creazione dei file, il copyright con cui vengono distribuiti e la data di creazione del file per cui non li leggiamo.
+
+Una volta letti i dati di un raster vengono immagazzinati in una enupla, di più facile gestione, che viene elaborata dal plugin.
 
 \subsubsection{Output}
 Come per l'input, l'output può essere gestito in due modi: attraverso il terminale python o via interfaccia grafica.
@@ -99,4 +117,4 @@ La libreria di Grass non è stata usata direttamente ma solo una delle sue compo
 \subsubsection{Osgeo}
 Una delle librerie utilizzate da Grass. Formalmente è una libreria per il supporto di operazioni su raster, in pratica è un porting di Numpy per i formati di file contenenti dati georeferenziati.
 
-Nel nostro caso è stato utilizzato per elaborare i dati dei file raster.
+%TODO Spiegare in dettaglio cosa fa la libreria e come la utilizziamo
