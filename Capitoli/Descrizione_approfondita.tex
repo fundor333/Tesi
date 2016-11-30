@@ -51,12 +51,13 @@ Questo permette una approssimazione utile per l'applicazione del modello RUSLE.
 \subsection{K o erodibilità del suolo}
 Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
 
-Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regresione matematica su dati sulla tessitura del terreno dell'area interessata. Questo a permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
+Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regresione matematica su dati sulla tessitura del terreno dell'area interessata. Questo ha permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima più precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
 
 \begin{equation}\label{eq:k}
 	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
 \end{equation}
-In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm
+In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm.
+La formula è comunque rispettata anche se i dati sono ottenuti tramite regressione matematica. Questo permette di non avere differenze notabili tra un K misurato e un K ottenuto tramite regressione.
 
 
 \subsection{LS rapporto tra lunghezza e pendenza}
