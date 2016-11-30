@@ -11,15 +11,15 @@
 \label{problemadarisolvere}
 Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
 
-Il modello viene definito col nome RUSLE
+Il modello viene definito col nome RUSLE\footnote{\textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation} che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso.
 
-Il problema puo' essere riassunto nell'equazione
+Il problema puo' essere descritto nell'equazione
 \begin{equation} \label{eq:main}
 A = R * K * LS * C * P
 \end{equation}
 
 in cui
-\begin{itemize}
+\begin{itemize} 
 	\item \textbf{A} corrispondente alla perdita di suolo annua
 	\item \textbf{R} erosività delle precipitazioni
 	\item \textbf{K} erodibilità del suolo
@@ -28,7 +28,11 @@ in cui
 	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione
 \end{itemize}
 
-Tutti questi dati sono forniti sotto forma di file che vengono poi elaborati per ottenere il raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1.
+Tutti questi dati sono forniti sotto forma di file di tipo raster che vengono poi elaborati per ottenere il file raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1 diventando ininfluente nell'equazione \ref{eq:main} che diventa
+
+\begin{equation} \label{eq:main_not_P}
+A = R * K * LS * C
+\end{equation}
 
 \subsection{R o erosività delle precipitazioni}
 Il parametro R rappresenta quanto le precipitazioni in una determinata area geografica. Viene fatto attraverso dati pluviometrici. Questi ultimi non sono dati con risoluzione temporale pari a un singolo evento meteorico ma da equazioni semplificate per ottenere il parametro da i dati di precipitazioni annue.
@@ -42,12 +46,12 @@ In questa equazione
 	\item \textit{$p_i$} corrisponde alle precipitazioni dell'$i$-esimo anno.
 \end{itemize}
 
-Questo permette una approssimazione utilile per l'applicazione del modello RUSLE.
+Questo permette una approssimazione utile per l'applicazione del modello RUSLE.
 
 \subsection{K o erodibilità del suolo}
 Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
 
-Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regrassione matematica su dati sulla tessitura del terreno dell'area interessata. Questo a permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
+Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regresione matematica su dati sulla tessitura del terreno dell'area interessata. Questo a permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
 
 \begin{equation}\label{eq:k}
 	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
