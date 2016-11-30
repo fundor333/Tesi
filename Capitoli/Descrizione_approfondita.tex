@@ -1,71 +1,224 @@
 % !TEX encoding = UTF-8
 % !TEX TS-program = pdflatex
 % !TEX root = ../Tesi.tex
-% !TEX spellcheck = it-IT
+% !TeX spellcheck = it_IT
 
 %************************************************
-\chapter{Descrizione approfondita dell'argomento}
+\chapter{Descrizione dell'argomento}
 \label{cap:descrizione}
 %************************************************
-\section{Problema da risolvere} Lo scopo di questa tesi è quello di calcolare in
-modo corretto l'erosione del territorio nell'area geografica scielta.
-Questo è stato fatto utilizzando un modello RUSLE basato sull'equazione\footnote{Il
-modello proposto è quello indicato in \cite[p.~37]{tesi:ambientale}}
+\section{Problema da risolvere}
+\label{problemadarisolvere}
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
 
-\begin{equation}
+Il modello viene definito col nome RUSLE
+
+Il problema puo' essere riassunto nell'equazione
+\begin{equation} \label{eq:main}
 A = R * K * LS * C * P
 \end{equation}
 
 in cui
 \begin{itemize}
-\item \textbf{A} corrispondente alla perdita di suolo annua
-\item \textbf{R} erosività delle precipitazioni
-\item \textbf{K} erodibilità del suolo
-\item \textbf{LS} rapporto lunghezza pendenza
-\item \textbf{C} fattore di copertura del suolo
-\item \textbf{P} misure di prevenzione dell'erosione
+	\item \textbf{A} corrispondente alla perdita di suolo annua
+	\item \textbf{R} erosività delle precipitazioni
+	\item \textbf{K} erodibilità del suolo
+	\item \textbf{LS} rapporto tra la lunghezza e la pendenza
+	\item \textbf{C} fattore di copertura del suolo
+	\item \textbf{P} i parametri delle misure di prevenzione dell'erosione
 \end{itemize}
 
-Questo modello è stato quindi applicato utilizzando i dati in formato di layer raster attraverso l'applicativo QGis.
-Questo viene fatto in quanto lo standard \textit{de facto} per questa tipologia di dato è il layer raster.
+Tutti questi dati sono forniti sotto forma di file che vengono poi elaborati per ottenere il raster corrispondente alla perdita di suolo annuo. Fa eccezzione il parametro P, che puo' venire omesso e rimosso dall'equazione, visto che in caso non ci siano misure di prevenzione dell'erosione il valore corrispondente al punto della matrice corrisponde a 1.
+
+\subsection{R o erosività delle precipitazioni}
+Il parametro R rappresenta quanto le precipitazioni in una determinata area geografica. Viene fatto attraverso dati pluviometrici. Questi ultimi non sono dati con risoluzione temporale pari a un singolo evento meteorico ma da equazioni semplificate per ottenere il parametro da i dati di precipitazioni annue.
+
+\begin{equation}\label{eq:r}
+	R = \sum_{i=1}^{n} \frac{p_i}{n}
+\end{equation}
+In questa equazione
+\begin{itemize}
+	\item \textit{n} corrisponde al numero di anni in cui si ha lo storico pluviometrico
+	\item \textit{$p_i$} corrisponde alle precipitazioni dell'$i$-esimo anno.
+\end{itemize}
+
+Questo permette una approssimazione utilile per l'applicazione del modello RUSLE.
+
+\subsection{K o erodibilità del suolo}
+Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
+
+Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regrassione matematica su dati sulla tessitura del terreno dell'area interessata. Questo a permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
+
+\begin{equation}\label{eq:k}
+	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
+\end{equation}
+In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm
 
 
-In particolare questo modello viene utilizzato per calcolare anno per anno l'erosione del territorio interessato avendo variazioni di dati in base all'anno o assumendo come invarianti negli anni i dati inseriti in imput.
+\subsection{LS rapporto tra lunghezza e pendenza}
+LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$ definiti per convenzione.
+\begin{equation}\label{eq:ls}
+	LS = \left(  \dfrac{A}{22,13} \right)^m
+	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
+\end{equation}
+
+Che viene modificata nella \eqref{eq:ls:edit} per ottenere una equazione che meglio rappresenti superfici con elevata complessità topografica e/o alta variabilità di pendenze.
+
+\begin{equation}\label{eq:ls:edit}
+LS=\left( \dfrac{flowacc * cellsize}{22,13}\right)^{04} \left( -1,5+\dfrac{17}{1+ e^{2,3-6,1*\sin{\alpha}}} \right)
+\end{equation}
+
+In cui
+\begin{itemize}
+	\item \textit{flowacc} corrisponde all' UCA  o numero di pixel tramite i quali l'acqua defluisce nell'area precisa di pixel
+	\item \textit{cellsize} dimensione dei pixel
+	\item \textit{$\alpha$} pendenza dell'area
+\end{itemize}
+
+\subsection{C o fattore di copertura del suolo}
+Il fattore C è un rapporto tra la perdita di suolo in precise condizioni di copertura e la perdita di suolo nel caso il terreno sia privo di qualunque protezione.
+Attualmente sono state fornite quarantaquattro classi di copertura di terreno con altrettanti valori del fattore C.
+
+E' possibile anche utilizzare i dati provenienti da sensori di tipo AVHRR\footnote{Advance Very High Resolution Radiometer} con cui si calcola l'indice  NDVI\footnote{Normalized Difference Vegetation Index} che varia tra $1$ e $-1$
+
+\begin{equation}\label{eq:c}
+	C=\exp\left( -\alpha \dfrac{NDVI}{\beta -NDVI} \right)
+\end{equation}
+
+\subsection{P o prevenzione dell'erosione}
+Fattore rappresentante misure di controllo quali sistemi di drenaggio, terrazzamenti e sistemi specifici di coltivazione.
+Questo viene rappresentato sotto forma di un coefficiente a dimensionale compreso tra $0$ e $1$.
+
+\section{Possibili risoluzioni}
+La tesi \cite{tesi:ambientale} propone quattro sistemi per applicare e visualizzare l'applicazione del modello RUSTLE per l'area di terreno indicato.
+
+Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati vagliati e valutati secondo le nostre esigenze. Tutte questi sistemi hanno dei pregi e dei difetti e sono stati segnalati in base alle nostre necessità
+
+\begin{itemize}
+
+
+	\item \textit{Ripetibilità} il sistema scelto deve essere facilmente ripetibile.
+
+	\item \textit{Veloce} il sistema scelto deve eseguire le operazioni per l'elaborazione e la visualizzazione deve rimanere in tempi ristretti anche se la mole di dati risulta enorme.
+
+	\item \textit{Indipendente} il sistema scelto deve essere indipendente dal sistema operativo, in modo da poter essere utilizzato su qualunque dispositivo\footnote{Si considerano solo computer, i dispositivi mobili non sono \textit{espressamente} richiesti}.
+
+	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello RUSLE.
+
+	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
+
+	\item{Visuabilizzabile} il sistema deve avere un output dati facilmente leggibile per l'essere umano attraverso il sistema stesso o un software specifico.
+
+\end{itemize}
+
+\subsection{Software di grafic design}
+Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare l'ambiente e le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro.
+
+\begin{itemize}
+	\item{Visuabilizzabile} Molto facile da visualizzare e navigare. Questo risulta il migliore sistema esaminato per vedere gli effetti dell'erosione nel terreno preso in esame
+
+	\item{Non ripetibile e complesso} Il sistema prevede che l'utente abbia una buona conoscenza di software di modellazione 3D e deve calcolare tutta l'erosione in modo autonomo.
+
+	\item{Lento e non automatizzabile} Il sistema prevede la presenza di uno o più persone che sviluppino una mappa 3D. Anche l'utilizzo di una mappa 3D pre-esistente comunque porta il lavoro a tempi superiori a venti minuti e risulta infattibile senza la presenza della persona.
+\end{itemize}
+
+
+
+\subsection{Programmazione}
+Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster di output. Per esempio è possibile farlo con Mathlab, R o Python con tempi di esecuzione diverso in base al linguaggio e a quanto è stato ottimizzato il codice che esegue queste operazioni.
+
+\begin{itemize}
+	\item{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo anche automatico.
+
+	\item{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così molte dipendenze esterne non desiderabili.
+
+	\item{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare idati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
+\end{itemize}
+
+Questo sistema riesce a essere quello più adattabile alle nostre necessità ma rischia di diventare un accumulo di dipendenze esterne se sviluppato male.
+
+\subsection{Desktop QGis}
+
+Software che permette di visualizzare e elaborare raster e altri formati di file geomorfici. Molto usato e supporta, nativamente o attraverso plugin installabili, la quasi totalità dei formati di file esistenti. In oltre permette, attraverso codice python, c e c++, di estendere le funzionalità del programma stesso.
+
+\begin{itemize}
+	\item{Ripetibile} una volta scritto il plugin risulta riutibilizzabile semplicemente cambiando i dati.
+
+	\item{Automatizzabile} Se scritto correttamente il plugin può effettuare la task assegnata in modo automatico ricevendo i dati da un altro processo.
+
+	\item{Visuabilizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati georeferenziati.
+
+	\item{Multipiattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
+\end{itemize}
+
+In oltre QGis risulta essere la prima scelta, come software, per l'analisi di dati geomorfici in ambito scientifico, per cui risulta naturale la scelta di sviluppare un plugin per questo applicativo.
 
 \section{QGis}
 
 QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
 
-In particolare sono state utilizzate le componenti di gestione input e output dei raster, il motore di calcolo e il sistema di rendering video. In oltre il programma supporta anche un sistema di plugin e scripting che aumenta le funzionalità del programma utilizzando codice esterno sviluppato dalla comunnity.
+Questo permette uno sviluppo continuo e slegato da esigenze commerciali evitando così obblighi di bilancio, rilasci effettuati solo per motivi di marcheting e dipendenze da ditte. Ogni individuo dotato di pc, connessione a internet e conoscenze di programmazione è in grado di aggiungere, rimuovere, migliorare funzionalità del programma e mandarle alla community. Quest'ultima dovrà quindi approvare le modifiche e applicarle al progetto e, così, dall'aggiornamento successivo, le modifiche saranno applicate su QGis.
 
-Altro dettaglio molto utile di QGis è il fatto che un programma multi piattaforma. Questo vuol dire che il programma è stato distribuito per più sistemi operativi\footnote{In questo caso per Android, Mac OS, Windows e Linux} e obbliga gli sviluppatori a scrivere plugin e script che siano anch'essi multipiattaforma. Questo permette l'utilizzo dei plugin e degli script per la creazione di funzioni automatizzate utilizzando le componenti già presenti in QGis o aggiungerne di nuove.
+Per questo progetto sono state utilizzate
+\begin{itemize}
+	\item \textit{Componenti di input e output} è possibile interfacciare il plugin scritto con il normale sistema di input/output di QGis ottenendo così un'interfaccia unica e coerente indipendentemente dal sistema operativo utilizzato.
+	\item \textit{Sistema di supporto di formati di file} Collegandosi al sistema di supporto dei formati di file è possibile utilizzare tutti i formati supportati dall'installazione di QGis.
+	\item \textit{Motore di calcolo} QGis comprende un pacchetto di operazioni standard sui file raster che sono utili per questo plugin.
+	\item \textit{Sistema di rendering a video dei dati} Il sistema permette di visualizzare i file a schermo in versione grafica. Questo può essere fatto con l'output dei dati ottenuti dal plugin.
+	\item \textit{Api di supporto per i plugin} Il sistema con cui si collega a QGis. Permette l'utilizzo da parte del plugin delle funzionalità di QGis senza difficolta e fissando delle convenzioni per il funzionamento e i sistemi di comunicazione.
+\end{itemize}
 
-In oltre, QGis supporta la quasi totalità dei formati open source utilizzati per la codifica per dati geomorfici e georeferenziati in modo nativo mentre i formati di file che non supporta sono utilizzabili attraverso plugin gratuiti disponibili online.
 
 \subsection{Descrizione dei tipi di dati supportati}
 
-I formati di dati possono essere divisi in tre macrocategorie in base a come vengono forniti:
+Per applicare il modello Rusle è necessario passare al programma i dati necessari per l'applicazione del modello matematico.
+In linea generale esistono svariati sistemi per passare i dati a un programma che si dividono in tre categorie:
+
 \begin{itemize}
-	\item Vettoriali
-	\item Raster
-	\item DBRMS con estensione spaziale
+	\item \textit{Input dell'utente} L'utente utilizzatore utilizza una interfaccia grafica o un terminale per inserire i dati uno a uno
+	\item \textit{File o database} Viene utilizzato un file che contiene i dati completi pronti per la elaborazione diretta
+	\item \textit{Flusso diretto} L'elaboratore riceve da un sensore o un dispositivo i dati mano a mano che questi risultano disponibili a quest'ultimo
 \end{itemize}
 
-Questi tre formati permettono solo alcune operazioni possibili legate alla composizione dei dati nel formato di input.
-Quindi, per alcune operazioni, QGis converte i dati nell formato appropiato in modo che sia sempre possibile fare tutte le operazioni disponibili, anche se queste puo' portare ad approssimazioni dei dati nella conversione.
+L'input diretto di dati all' interno dell'interfaccia grafica o del terminale risulta fattibile nel caso i dati da inserire siano pochi. Questo non è possibile nel nostro caso. Infatti i dati che possono essere forniti possono essere delle matrici contenenti i dati geomorfici divisi per celle di dimensione un metro per un metro. Questo comporta che per un area di un kilometro quadrato ci siano un miglione di celle da inserire manualmente per ogni parametro del'equazione \eqref{eq:main}.
+
+L'input attraverso flusso di dati in questo problema non è fattibile. Questo perchè non è possibile avere questi dati da sensori. Come spiegato nel paragrafo \ref{problemadarisolvere}, i dati sono legati a un periodo di tempo o alla struttura del territorio ottenendo così solo dati "statistici" o "estrapolati".
+
+Quindi per il nostro problema i dati vengono forniti sotto forma di file o di database in quanto necessitano di una pre elaborazione e di una formattazione in base allo standard scelto.
+Questo sistema è utile anche perchè permette di riutilizzare gli stessi dati per elaborazioni successive, cosa non prevista negli altri due casi.
+
+I formati di dati possono essere divisi in tre macrocategorie in base alla codifica utilizzata:
+\begin{itemize}
+	\item File Vettoriali
+	\item File Raster
+	\item DBRMS con estensione spaziale \footnote{Database resource managements}
+\end{itemize}
+
+In base alla tipologia di dati puo' risultare più efficiente una operazione in vece che un altra.
+Quindi, per alcune operazioni, QGis converte i dati nell formato appropiato in modo che sia sempre possibile fare tutte le operazioni disponibili nel modo più efficiente possibile, tenendo al minimo le approssimazioni dei dati nella conversione. Sarebbe consigliato quindi di utilizzare direttamente il file nella corretta codifica in modo da limitare i possibili errori causati dalla conversione da e in formati divrsi.
+
+L'utilizzo di un unico formato di file sia per l'input che per l'output limita quindi la propagazione degli errori in modo da ottenere dati approsimativamente più concordi col modello applicato evitando così di dover applicare fattori di correzione all'output dei dati.
 
 \subsection{La struttura di QGis}
-QGis è un programma avanzato con molte funzionalità che possono essere suddivise in alcune macro-categorie che sono indipendenti dal tipo di dato o file utilizzato.
-Le funzionalità standard di QGis sono gestite attraverso dei moduli che costituiscono l'istallazione di base del programma e le funzionalità aggiuntive vengono implementate attraverso plugin dipendenti da questi moduli di base per poter funzionare correttamente.
-Solitamente i moduli sono scritti in C o C++ mentre i plugin e gli script sono in Python.
+QGis è un programma avanzato con molte funzionalità che possono essere suddivise in alcune macro-categorie che sono indipendenti dal tipo di dato o file utilizzato ed è possibile utilizzarli in contemporanea.
+
+
+Le funzionalità standard di QGis sono gestite attraverso dei moduli che costituiscono l'installazione di base del programma. Questi moduli sono forniti dalla community sotto forma di un unico pacchetto (QGis per l'appunto) che viene diviso in applicativo server e applicativo client. Per come è stato impostato il progetto è stato preso in considerazione solo l'installazione client e successivamente è stato modificato per poter aggiungere il supporto ad automatismi e applicativi server. I moduli sono scritti in C e C++ e vengono modificati nel repository ufficiale di QGis. L'utente comune e quello esperto non hanno mai bisogno di modificare questi moduli, al massimo solo le loro configurazioni. Per questo motivo è stato creato un sistema di API per il supporto di implementazione di funzionalità aggiuntive.
+
+Le funzionalità aggiuntive vengono implementate attraverso plugin dipendenti da questi moduli di base o altri plugin e script per poter funzionare correttamente. Questo permette l'aggiunta di qual si voglia funzionalità non standard senza andar a toccare i moduli pre compilati dell'installazione.
+Per questo motivo è stato neessario scegliere un linguaggio di programmazione che permetta un corretto interfacciamento con i moduli C e C++ e risulti di facile mantenimento. Sul sito ufficiale di QGis \cite{site:qgis} viene spiegato che l'utilizzo di python per i plugin di QGis è dato dalla diffusione del linguaggio e dal suo ampio uso nel campo di \textit{Data Analisys}. In oltre python si interfaccia correttamente coi i file C e C++ senza portare nessuna modifica a questi ma facendoli semplicemente importare nello script interessato.
+
+Di seguito presento quindi i moduli principali di QGis e i tipi di plugin più diffusi.
 
 \subsubsection{Rendering grafico dei dati}
-QGis ha la capacità di realizzare svariate visualizzazioni grafiche dei dati inseriti o calcolati.
-Questo permette la realizzazioni di immagini ad alta definizione dei dati inseriti e ne permetta anche l'esportazione nei formati più comuni di immagini.
+QGis ha la capacità di realizzare svariate visualizzazioni grafiche dei dati inseriti o calcolati. 
+Questo permette la realizzazioni di immagini ad alta definizione dei dati inseriti e ne permetta anche l'esportazione nei formati più comuni di immagini. Risulta essere anche configurabile dal punto di vista cromatico e di qualità dell'immagine in output ma può essere di difficile lettura senza un riferimento o delle indicazioni in base alla posizione dei dati o alla conformazione geologica del territorio interessato dai dati.
 
 \subsubsection{Realizzazione mappe}
-In presenza di dati georeferenziati QGis permette di sovrapporre la rappresentazione grafica dei dati alla mappa corrispondente alle coordinate georeferenziali.
-Questo permette di creare mappe fisiche contenenti la visualizzazione di aree di erosione attraverso aree colorate o altri effetti applicabili alla mappa sottostante.
+In presenza di dati georeferenziati QGis permette di sovrapporre la rappresentazione grafica dei dati alla mappa corrispondente alle coordinate geografiche.
+Fondamentalmente utilizzato per correlare i dati alla mappa geografica corrispondente. Molto utilizzato per visualizzare il traffico diviso per aree di una città o i movimenti dei fronti temporaleschi. 
+
+Molto importante anche la possibilità di fare una serie di "mappe" in sequenza per mostrere la  
 
 \subsubsection{Creazione, elaborazione e conversione dati}
 QGis presenta due moduli per l'elaborazioni di dati:
@@ -84,7 +237,7 @@ Per aumentare lel funzionalità di QGis e scriptare alcune operazioni sono stati
 Sono dei programmi dipendenti da QGis che implementano funzionalità non presenti nel programma di base o estendono il supporto delle funzioni esistenti o i tipi di file supportati.
 
 \subsubsection{Plugin per formati di file}
-Vengono utilizzati per elaborare dati grezzi altrimenti difficilmente manipolabili. 
+Vengono utilizzati per elaborare dati grezzi altrimenti difficilmente manipolabili.
 Un esempio possono essere i dati grezzi ottenuti da degli strumenti di misurazione con dati in output non standard.
 Normalmente questi file sono leggibili solo col programma abilitato alle modifiche ma, con l'utilizzo del plugin corretto, è possibile leggerlo e elaborarlo direttamente in QGis.
 

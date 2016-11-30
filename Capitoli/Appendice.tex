@@ -4,8 +4,47 @@
 % !TEX spellcheck = it-IT
 
 %************************************************
-\chapter{Appendice}
+
+\chapter{Estendere le funzionalità del plugin}
 \label{cap:appendice}
 %************************************************
+Questa appendice spiega come è strutturato a livello di codice il plugin. In particolare si vuole spiegare dove bisogna mettere mano al codice per modificarlo ed aggiungere funzionalità nuove.
 
-\section{Strutturare un plugin}
+\section{Struttura del plugin}
+Il plugin, per poter funzionare, deve seguire la struttura standard indicata sulle api ufficiali \cite{site:qgisapi}:
+\begin{itemize}
+	\item \textbf{File di configurazione}: necessari per il corretto funzionamento del plugin, contengono le informazioni per far funzionare correttamente il plugin, i codici delle versioni di QGis supportate e gli indirizzi delle risorse grafiche. 
+	\item \textbf{Risorse grafiche}: file che contengono il codice che, compilato, produce il codice che disegna le interfacce grafiche del plugin. Questi file sono strati costruiti attraverso la libreria grafica QT e vengono poi compilati in python.
+	\item \textbf{Codice}: il codice che viene effettivamente eseguito dal plugin. Diviso in più file per facilità di manutenzione, deve contenere un file \_init\_.py da cui si avvia interamente il plugin.
+\end{itemize}
+
+\subsection{Elementi di base}
+RUSLECalculator segue alla lettere la stuttura indicata da \cite{site:qgisapi}. Questo comporta la presenza di alcuni file che segnalano a QGis la presenza del plugin e permettano a QGis di caricarlo correttamente.
+In particolare è necessaria la presenza di un file \_init\_.py in cui viene lanciato il plugin e un file metadata.txt in cui ci sono i dati richiesti sul plugin. Se questi due file sono assenti o configurati in modo sbagliato o ci sono errori all'interno QGis si rifiuterà di caricarli e, di conseguenza, apparirà nell'elenco dei plugin difettosi (sistema fatto affinché lo sviluppatore possa avere riscontro con QGis su quale sia l'errore incontrato).
+In oltre, la corretta e completa compilazione del file metadata.txt permette l'invio del plugin ai server ufficiali di QGis per l'inserimento del plugin all'interno del catalogo ufficiale, che viene visualizzato all'interno del menu Plugin quando si vede quali sono i plugin attivi, disattivati, installati e non installati in QGis.
+
+\subsection{metadata.txt}
+File contenente i dati sul plugin. Tutte le informazioni che QGis carica attraverso il catalogo plugin provengono da questo file. 
+Questi dati vengono divisi in due macrocategorie:
+\begin{itemize}
+	\item \textbf{Mandatory items}: Elementi senza i quali QGis non riconosce il plugin. Senza di questi elementi non è nemmeno possibile caricare il plugin nel catalogo online
+		\subitem \textbf{name} Nome del plugin che appare nel catalogo e che viene visualizzato nel menu dei plugin
+		\subitem \textbf{qgisMinimumVersion} Versione minima richiesta di QGis per far funzionare il plugin. Utile per vedere quanto è retrocompatibile il plugin
+		\subitem \textbf{description} Breve descrizione del plugin in modo che sia facilmente comprensibile la sua funzione
+		\subitem \textbf{version} Numero di versione del plugin. Essenziale in quanto permette a QGis di capire se è l'ultima versione o c'è una versione successiva che va installata
+		\subitem \textbf{author} Nome dell'autore che ha realizzato il plugin
+		\subitem \textbf{email} Email di riferimento per il plugin
+	\item \textbf{Recommended} Elementi non obbligatori che aggiungono informazioni extra sul materiale. L'elenco che segue sono quelli utilizzati per il plugin
+		\subitem \textbf{tags} Elenco di parole chiave separate da virgola che descrivono il plugin. Servono per poter apparire nei risultati del cerca del catalogo dei plugin
+		\subitem \textbf{homepage} Pagina del plugin, in cui trovare ulteriori informazioni su di esso
+		\subitem \textbf{tracker} Pagina web dove si segnalano tutti i problemi legati al funzionamento del plugin. Solitamente è un servizio che viene offerto dai siti che hostano il repository del plugin
+		\subitem \textbf{repository} Link al repository dove è hostato il sorgente del plugin. Il link è alla pagina del progetto corrispondente
+		\subitem \textbf{category} Stringa che identifica la tipologia del plugin sviluppato. Utile per essere correttamente assegnato alle categorie del catalogo dei plugin
+		\subitem \textbf{icon} Definisce il path relativo dalla cartella del progetto alla immagine utilizzata come icona dal plugin
+		\subitem \textbf{experimental} Indica se la versione del plugin è stabile o una versione sperimentale
+	\item \textbf{deprecated} Voce per segnalare che l'intero plugin è deprecato. Fare attenzione perchè se segnato come True viene applicato a tutte le versioni del plugin
+\end{itemize}
+
+\subsection{GdalTools\_utils.py}
+Script dal pacchetto GdalTools. Permette di aprire una finestra di salvataggio del file. Utilizzandola siamo obbligati a utilizzare la licenza GNU GPU v2 o superiore. 
+E' stato scelto di utilizzare questo script all'interno del progetto in modo da evitare dipendenze dal pacchetto GdalTools che risulta essere incompatibile con alcune installazioni di python e alcuni plugin. Per questo motivo, seguendo le indicazioni della licenza e condizioni d'uso di GdalTools, è stato copiato in modo integrale il file \textit{GdalTools\_utils.py} contenente la funzione necessaria per la visualizzazione della finestre e dell'elenco dei formati disponibili.
