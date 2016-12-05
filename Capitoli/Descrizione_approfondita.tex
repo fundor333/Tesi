@@ -61,13 +61,13 @@ La formula è comunque rispettata anche se i dati sono ottenuti tramite regressi
 
 
 \subsection{LS rapporto tra lunghezza e pendenza}
-LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$ definiti per convenzione.
+LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$, che vengono definiti per convenzione.
 \begin{equation}\label{eq:ls}
 	LS = \left(  \dfrac{A}{22,13} \right)^m
 	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
 \end{equation}
 
-Che viene modificata nella \eqref{eq:ls:edit} per ottenere una equazione che meglio rappresenti superfici con elevata complessità topografica e/o alta variabilità di pendenze.
+L'equazione \eqref{eq:ls} viene modificata nella \eqref{eq:ls:edit} per ottenere una equazione che meglio rappresenti superfici con elevata complessità topografica e/o alta variabilità di pendenze in modo da essere più coerente con la granularità dei dati ottenuti.
 
 \begin{equation}\label{eq:ls:edit}
 LS=\left( \dfrac{flowacc * cellsize}{22,13}\right)^{04} \left( -1,5+\dfrac{17}{1+ e^{2,3-6,1*\sin{\alpha}}} \right)
@@ -101,7 +101,6 @@ Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati
 
 \begin{itemize}
 
-
 	\item \textit{Ripetibilità} il sistema scelto deve essere facilmente ripetibile.
 
 	\item \textit{Veloce} il sistema scelto deve eseguire le operazioni per l'elaborazione e la visualizzazione deve rimanere in tempi ristretti anche se la mole di dati risulta enorme.
@@ -128,19 +127,19 @@ Attraverso i classici programmi di creazione di ambienti virtuali è possibile v
 \end{itemize}
 
 
-
 \subsection{Programmazione}
-Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster di output. Per esempio è possibile farlo con Mathlab, R o Python con tempi di esecuzione diverso in base al linguaggio e a quanto è stato ottimizzato il codice che esegue queste operazioni.
+Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster di output. Per esempio è possibile farlo con Mathlab, R o Python. La differenza tra i linguaggi è sostanzialmente la velocità di esecuzione del codice e quanto il codice è mantenibile.
 
 \begin{itemize}
-	\item{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo anche automatico.
+	\item{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo automatico e ripetibile un numero infinito di volte.
 
-	\item{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così molte dipendenze esterne non desiderabili.
+	\item{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così dipendenze esterne non desiderabili.
 
-	\item{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare idati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
+	\item{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare i dati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
+	
 \end{itemize}
 
-Questo sistema riesce a essere quello più adattabile alle nostre necessità ma rischia di diventare un accumulo di dipendenze esterne se sviluppato male.
+Questo sistema riesce a essere quello più adatto alle nostre esigenze ma ci vincola ad un numero variabile di dipendenze a progetti esterni su cui non abbiamo nessun controllo aumentando in modo esponenziale il tempo di mantenimento del codice provocando un aumento dei costi di mantenimento.
 
 \subsection{Desktop QGis}
 
