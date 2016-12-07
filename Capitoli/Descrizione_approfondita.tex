@@ -49,6 +49,7 @@ In questa equazione
 Questo permette una approssimazione utile per l'applicazione del modello RUSLE.
 
 \subsection{K o erodibilità del suolo}
+
 Il parametro K rappresenta quanto il terreno puo' essere eroso. Questo dipende molto da come  strutturato il terreno, dalla sua composizione geologica e da alcune caratteristiche fisiche e chimiche dello stesso.
 
 Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni per cui è stata fatta una regresione matematica su dati sulla tessitura del terreno dell'area interessata. Questo ha permesso la creazione di un modello matematico descritto dall'equazione di Romkens che permette la creazione di una stima più precisa (per quanto riguarda i nostri scopi) dell'erodibilità del suolo.
@@ -56,12 +57,12 @@ Questo tipo di dato non è disponibile per aree geografiche di grosse dimensioni
 \begin{equation}\label{eq:k}
 	K=0,0034 + 0,0405 * \exp{-0,5\left( \dfrac{(\log(D_g)+1,659)^2}{0,7101} \right) }
 \end{equation}
+
 In cui $D_g$ è il diametro medio pesato rispetto alla classi tessiturali dominanti in mm.
 La formula è comunque rispettata anche se i dati sono ottenuti tramite regressione matematica. Questo permette di non avere differenze notabili tra un K misurato e un K ottenuto tramite regressione.
 
-
 \subsection{LS rapporto tra lunghezza e pendenza}
-LS rappresenza un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$, che vengono definiti per convenzione.
+LS rappresenta un rapporto tra lunghezza e pendenza a meno di due parametri $m=0,4$ e $n=1,3$, che vengono definiti per convenzione.
 \begin{equation}\label{eq:ls}
 	LS = \left(  \dfrac{A}{22,13} \right)^m
 	\left(  \dfrac{\sin(\alpha)}{0,0896} \right)^n
@@ -146,13 +147,13 @@ Questo sistema riesce a essere quello più adatto alle nostre esigenze ma ci vin
 Software che permette di visualizzare e elaborare raster e altri formati di file geomorfici. Molto usato e supporta, nativamente o attraverso plugin installabili, la quasi totalità dei formati di file esistenti. In oltre permette, attraverso codice python, c e c++, di estendere le funzionalità del programma stesso.
 
 \begin{itemize}
-	\item{Ripetibile} una volta scritto il plugin risulta riutibilizzabile semplicemente cambiando i dati.
+	\item{Ripetibile} una volta scritto il plugin risulta riutilizzabile semplicemente cambiando i dati.
 
 	\item{Automatizzabile} Se scritto correttamente il plugin può effettuare la task assegnata in modo automatico ricevendo i dati da un altro processo.
 
-	\item{Visuabilizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati georeferenziati.
+	\item{Visualizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati geo referenziati
 
-	\item{Multipiattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
+	\item{Multi piattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
 \end{itemize}
 
 In oltre QGis risulta essere la prima scelta, come software, per l'analisi di dati geomorfici in ambito scientifico, per cui risulta naturale la scelta di sviluppare un plugin per questo applicativo.
@@ -161,14 +162,17 @@ In oltre QGis risulta essere la prima scelta, come software, per l'analisi di da
 
 QGis si definisce come "Un Sistema di Informazione Geografica Libero e Open Source"\cite{site:qgis} ovvero è un software che gestisce, elabora e visualizza dati geomorfici e georeferenziati, completamente gratuito e modificabile in ogni sua parte(è limitato dalla licenza utilizzata nello sviluppo del software \cite{site:cc3}).
 
-Questo permette uno sviluppo continuo e slegato da esigenze commerciali evitando così obblighi di bilancio, rilasci effettuati solo per motivi di marcheting e dipendenze da ditte. Ogni individuo dotato di pc, connessione a internet e conoscenze di programmazione è in grado di aggiungere, rimuovere, migliorare funzionalità del programma e mandarle alla community. Quest'ultima dovrà quindi approvare le modifiche e applicarle al progetto e, così, dall'aggiornamento successivo, le modifiche saranno applicate su QGis.
+Questo permette uno sviluppo continuo e slegato da esigenze commerciali evitando così aggiornamenti fatti solo per motivi economici, obblighi d'uso di formati proprietari e abbandoni di sviluppo in caso di fallimento della ditta. Ogni individuo dotato di pc, connessione a internet e conoscenze di programmazione è in grado di aggiungere, rimuovere, migliorare funzionalità del programma e mandarle alla community. Quest'ultima dovrà quindi approvare le modifiche e applicarle al progetto e, così, dall'aggiornamento successivo, le modifiche saranno applicate su QGis.\\
 
-Per questo progetto sono state utilizzate
+
+In questo progetto sono state utilizzate delle componenti del motore di QGis in modo da poter dedicare maggior attenzione allo sviluppo dei componenti realmente importanti del plugin, in modo da poter garantire il corretto funzionamento e la compatibilità con QGis.
+
+In particolare sono stati utilizzati:
 \begin{itemize}
-	\item \textit{Componenti di input e output} è possibile interfacciare il plugin scritto con il normale sistema di input/output di QGis ottenendo così un'interfaccia unica e coerente indipendentemente dal sistema operativo utilizzato.
-	\item \textit{Sistema di supporto di formati di file} Collegandosi al sistema di supporto dei formati di file è possibile utilizzare tutti i formati supportati dall'installazione di QGis.
-	\item \textit{Motore di calcolo} QGis comprende un pacchetto di operazioni standard sui file raster che sono utili per questo plugin.
-	\item \textit{Sistema di rendering a video dei dati} Il sistema permette di visualizzare i file a schermo in versione grafica. Questo può essere fatto con l'output dei dati ottenuti dal plugin.
+	\item \textit{Componenti di input e output} È il sistema che rende possibile interfacciare il plugin scritto con il normale sistema di input/output di QGis ottenendo così un'interfaccia unica e coerente indipendentemente dal sistema operativo utilizzato. In oltre permette di visualizzare sempre la finestra che si cerca di visualizzare in quanto utilizza librerie grafiche già installate sul dispositivo in uso in quanto già necessarie per il normale funzionamento di QGis.
+	\item \textit{Sistema di supporto di formati di file} Collegandosi al sistema di supporto dei formati di file è possibile utilizzare tutti i formati supportati dall'installazione di QGis. Questo, a sua volta, è estendibile con l'utilizzo di altri plugin che aggiungono formati di file utilizzabili in lettura e scrittura che, a loro volta, possono essere utilizzati da gli altri plugin installati, tra cui quello descritto in questa tesi.
+	\item \textit{Motore di calcolo} QGis comprende un pacchetto di operazioni standard sui file raster. Questo pacchetto risulta molto pratico in quanto ottimizzato per le esigenze di QGis risulta particolarmente efficiente a elaborare i raster.
+	\item \textit{Sistema di rendering a video dei dati} Il sistema permette di visualizzare i file a schermo in versione grafica. Questo può essere fatto con l'output dei dati ottenuti dal plugin e sovrapposto a mappe fisiche, rendendo così più immediata la visualizzazione.
 	\item \textit{Api di supporto per i plugin} Il sistema con cui si collega a QGis. Permette l'utilizzo da parte del plugin delle funzionalità di QGis senza difficolta e fissando delle convenzioni per il funzionamento e i sistemi di comunicazione.
 \end{itemize}
 
