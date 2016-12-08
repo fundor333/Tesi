@@ -21,10 +21,10 @@ Ne consegue che i sotto problemi esaminati sono:
 \item Output dei dati seguendo metodi che permettano un facile accesso ai risultati sia all'utente che alla macchina.
 \end{itemize}
 
-Questa strutturazione permette il riciclo del codice di altri progetti che hanno affrontato lo stesso problema o sotto problema e favoriscono l'aggiunta di funzionalità e l'aggiornamento delle parti. 
+Questa strutturazione permette il riciclo del codice di altri progetti che hanno affrontato lo stesso problema o sotto problema e favoriscono l'aggiunta di funzionalità e l'aggiornamento delle parti.
 
 \subsection{Interfaccia grafica}
-Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente. 
+Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente.
 Si è quindi pensato alla tipologia di utente che può utilizzare il nostro plugin facendo attenzione alle sue competenze e al suo background.
 Questo ha portato a ridurre la soluzione in due macro categorie:
 \begin{itemize}
@@ -62,21 +62,21 @@ Ovviamente si poteva avere lo stesso risultato utilizzando altre librerie grafic
 Il plugin prende in ingresso i file contenenti i dati necessari per l'applicazione al modello matematico descritto dall'equazione \ref{eq:main}. Quindi, una volta eseguite le operazioni produce l'output corrispondente all'erosione per il numero di anni dati in input.
 
 Le operazioni di lettura e scrittura sono le operazioni più sensibili in questo applicativo in quanto non c'è modo di controllare la correttezza dei dati in input dal punto di vista fisico/geologico, solo dal punto di vista informatico di buona formattazione.
-Per questo motivo assumiamo da questo punto in poi che i dati passati in input siano corretti dal punto di vista geologico ma non obbligatoriamente corretto dal punto di vista della formattazione\footcite{Il controllo del formato del file viene fatto in modo automatico quando il plugin cerca di caricare i file passati per indirizzo}. 
+Per questo motivo assumiamo da questo punto in poi che i dati passati in input siano corretti dal punto di vista geologico ma non obbligatoriamente corretto dal punto di vista della formattazione\footcite{Il controllo del formato del file viene fatto in modo automatico quando il plugin cerca di caricare i file passati per indirizzo}.
 
 \subsubsection{Input}
-Per una questione di coerenza rispetto a QGis è stato deciso di passare i dati in input come file, in modo che possano essere facilmente condivisi e possano interagire più facilmente con QGis stesso. Per fare ciò è stato necessario fare una ricerca sui tipi di file utilizzati per i dati georefernziati.
+Per una questione di coerenza rispetto a QGis è stato deciso di passare i dati in input seguendo gli standard internazionali, in modo che possano essere facilmente condivisi e possano interagire più facilmente con QGis stesso. Per fare ciò è stato necessario fare una ricerca sui tipi di file utilizzati per i dati georeferenziati.
 
-Per questo motivo è stata fatta una ricerca sui formati di file supportati nativamente da QGis che fossero di tipo raster\footnote{Unico tipo di dati che il plugin accetta in input in quanto è l'unica struttura dati adatta a contenere i dati che ci servono per l'elaborazione} e quali fossero supportati attraverso plugin esterni.
+Si è quindi iniziato recuperando l'elenco dei formati supportati nativamente da QGis di tipo raster\footnote{Il tipo di dati che il plugin accetta in quanto è l'unica struttura dati adatta a contenere i dati che ci servono per l'elaborazione} e l'elenco dei formati che è possibile supportare attraverso plugin esterni in modo da avere un elenco di tutti i possibili formati da supportare.
 
-E' stata quindi usata una delle funzioni del core di QGis per il riconoscimento automatico dei formati riconosciuti da QGis in modo da eseguire l'elaborazione del singolo file col driver corrispondente installato migliore.
+\egrave stata quindi usata una delle funzioni del core di QGis per abbinare il formato di file ricevuto in input con quelli in memoria di QGis in modo da poter utilizzare il driver corretto per l'elaborazione. L'elenco che viene esaminato per l'ottenimento del driver si riferisce solo ai driver che permettono la lettura del file. Se per qualche ragione ci fossero dei driver di sola scrittura per qualche formato di file allora questi non apparirebbero tra i driver utilizzabili\footnote{Da tenere in considerazione quando si eseguono i comandi direttamente da terminale, in quanto lo stesso comando, in base al parametro passato, ritorna tutti i driver o solo quelli di lettura o solo quelli di scrittura}.
 
-Questo permette di avere un plugin più elastico, in quanto non necessita di aggiornamento se viene aggiunto il supporto a un tipo aggiuntivo di file per QGis ma recupera direttamente dalle configurazioni di QGis i dati necessari per la lettura, decodifica e rielaborazione del file in questione.
+Grazie a questo sistema si è potuto evitare di dover creare un archivio dei formati disponibili e dei driver esistenti che avremmo dovuto cercare all'interno del computer in cui si esegue il plugin. Invece viene consultato il catalogo interno di QGis che viene interamente gestito dall'installazione di QGis e da i plugin che aggiungono supporto per altri formati, ottenendo così un elenco in tempo reale e senza ulteriore sforzo da parte del plugin. 
 
 In oltre, il codice di gestione per i file in input è integrato nell'interfaccia grafica in modo da rendere semplice l'inserimento di dati all'interno del programma stesso. Supporta comunque l'utilizzo attraverso il terminale di QGis anche se ne è sconsigliato l'uso ai meno esperti e a chi si approccia per la prima volta a questo plugin.
 %TODO inserire immagine apertura file
 
-Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
+Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale \ref{fig:screen1}. %TODO inserire riferimento a immagine gui generale
 Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente nel campo senza aprire la finestra per la scelta della cartella.
 
 Il file raster ricevuto in input viene quindi separato nelle sue componenti. Il file raster infatti è composto da due componenti:
@@ -111,7 +111,7 @@ Nel casos i driver non vengono registrati all'interno dell'elenco dei driver per
 
 %TODO Spiegare la scrittura di raster
 \subsection{Elaborazione dati}
-Una volta ricevuti i dati in input si pensa a elaborarli. Per farlo è stato necessario generare una struttura dati idonea ai formati in input. E' stato quindi deciso di implementare l'elaborazione attraverso la struttura dati raster. A sua volta i dati geomorfici del raster sono all'interno di una matrice, che è l'oggetto con cui il plugin esegue le operazioni.
+Una volta ricevuti i dati in input si pensa a elaborarli. Per farlo è stato necessario generare una struttura dati idonea ai formati in input. \egrave stato quindi deciso di implementare l'elaborazione attraverso la struttura dati raster. A sua volta i dati geomorfici del raster sono all'interno di una matrice, che è l'oggetto con cui il plugin esegue le operazioni.
 
 In oltre è stato necessario trovare una o più librerie che implementassero le funzionalità richieste per l'elaborazione dei dati raster mantenendo al minimo le dipendenze esterne. In caso di assenza di librerie si sarebbe dovuto implementare tutto da zero. Per nostra fortuna sono disponibili alcune librerie che eseguono calcoli in raster.
 
