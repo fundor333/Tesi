@@ -39,13 +39,14 @@ Per come è strutturato QGis è possibile avere entrambi implementati nel plugin
 
 In particolare in questa applicazione è stata implementata l'interfaccia grafica in quanto risulta molto più adatta all'uso effettivo dell'applicazione.
 
-\begin{figure}
-	\includegraphics[width=\linewidth]{Capitoli/img/interfaccia.png}
-	\caption{A boat.}
-	\label{fig:boat1}
-\end{figure}
+Infatti come si vede nell'immagine \ref{fig:screen1} per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
 
-Infatti come si vede nell'immagine \ref{fig:boat1} per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{Capitoli/img/interfaccia.png}
+	\caption{La finestre di configurazione del plugin. Permette di indicare il path dei file in input e quello di output in modo grafico}
+	\label{fig:screen1}
+\end{figure}
 
 \subsubsection{Qt4}
 
