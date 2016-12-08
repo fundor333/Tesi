@@ -7,24 +7,26 @@
 \chapter{Realizzazione}
 \label{cap:realizzazione}
 
-Il progetto è stato realizzato attraverso la divisione in subproblemi. Questo permette la sostituzione di una componente con un'altra in modo rapido ed sicuro in quanto viene a essere modificata solo la parte del codice interessata dall'operazione e non tutte le altre componenti, che rimangono invariate.
+Il progetto è stato realizzato attraverso la divisione in sotto problemi. Questo permette la sostituzione di una componente con un'altra in modo rapido ed sicuro in quanto viene a essere modificata solo la parte del codice interessata dall'operazione e non tutte le altre componenti, che rimangono invariate. Questo permette di testare singolarmente le parti senza necessità di avere tutte le componenti già sviluppate e renderle funzionalmente indipendenti.
 
-Questo ha portato anche alla ricerca di alcune librerie per eseguire le operazioni necessarie alle funzioni scelte.
+Questo ha portato anche alla ricerca di alcune librerie per eseguire le operazioni necessarie alle funzioni scelte in modo da poter rispettare lo schema di sotto problemi deciso precedentemente.
 
-\section{Divisione in sottoproblemi}
-Per semplificare lo sviluppo di questa applicazione e il suo sviluppo è stato diviso il progetto in quattro componenti indipendenti che dialogano tra di loro, in modo da rendere più isolate le varie componenti, rendendole meno soggette a errori non previsti.
-Queste si dividono in:
+\section{Divisione in sotto problemi}
+Quindi il problema di calcolo del quantitativo di terreno annuo perso è stato diviso prima in quattro sotto problemi a cui è stata data una soluzione attraverso quattro componenti indipendenti che dialogano tra di loro ,preferendo una risoluzione modulare del problema, rendendo così le componenti meno soggette a errori e più facili da testare.
+Ne consegue che i sotto problemi esaminati sono:
 \begin{itemize}
-\item Interfaccia grafica
-\item Lettura dei file in ingresso
-\item Gestione ed elaborazione dei dati
-\item Scrittura dei file in uscita
+\item Come l'utente comunica con l'applicazione e come gli passa i comandi
+\item Come l'applicazione riceve i dati e i formati di dati compatibili e/o supportati
+\item Come vengono elaborati i dati in modo da seguire il modello \rusle
+\item Output dei dati seguendo metodi che permettano un facile accesso ai risultati sia all'utente che alla macchina.
 \end{itemize}
 
-Questa strutturazione permette anche il riciclo del codice utilizzato per risolvere i sottoproblemi in altri progetti con la stessa necessità o la facile estensione del plugin in un secondo momento
+Questa strutturazione permette il riciclo del codice di altri progetti che hanno affrontato lo stesso problema o sotto problema e favoriscono l'aggiunta di funzionalità e l'aggiornamento delle parti. 
 
 \subsection{Interfaccia grafica}
-Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente. Questo, solitamente, viene fatto in due modi:
+Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente. 
+Si è quindi pensato alla tipologia di utente che può utilizzare il nostro plugin facendo attenzione alle sue competenze e al suo background.
+Questo, solitamente, viene fatto in due modi:
 \begin{itemize}
 
 \item Attraverso l'uso di un \textbf{terminale} in cui vengono passati dei comandi che eseguono le operazioni richieste e mostra a schermo tutti i dati dei comandi eseguiti. Questo però obbliga l'utente a sapere i comandi necessari alla esecuzione dei task e ritorna a schermo dati di poco interesse per l'utente medio, molto utile invece se sei un programmatore e vuoi controllare come procedono i vari passi dei comandi eseguiti e permette di vedere subito ove avvengono gli errori e cosa li generano.
@@ -71,7 +73,7 @@ In oltre, il codice di gestione per i file in input è integrato nell'interfacci
 Come vedete dall'immagine il plugin apre una finestra di sistema differente in base al sistema operativo utilizzato, in quanto la gestione della scelta del file è delagato a esso. Una volta avvenuta la scelta questa finestra si chiuderà passando la stringa corrispondente al path del file aperto al campo adiacente presente nella gui principale. %TODO inserire riferimento a immagine gui generale
 Se l'utente lo desidera puo' editare o direttamente inserire il path al file scelto direttamente nel campo senza aprire la finestra per la scelta della cartella.
 
-Il file raster ricevuto in input viene quindi separato nelle sue componenti. Il file raster infatti è composto da due componenti: 
+Il file raster ricevuto in input viene quindi separato nelle sue componenti. Il file raster infatti è composto da due componenti:
 \begin{itemize}
 	\item una matrice che contiene i dati di interesse di quel raster
 	\item una enupla legata ai dati della matrice
@@ -110,7 +112,7 @@ In oltre è stato necessario trovare una o più librerie che implementassero le 
 \subsubsection{Grass}
 Plugin standard che da accesso a tutte le funzionalità avanzate di GRASS GIS. Dal punto di vista tecnico non è una libreria ma un insieme di librerie che gestiscono raster e elaborazioni avanzate dei dati. Essendo di facile installazione e, in alcune versioni, distribuito direttamente con QGis è un ottimo sistema per avere facilmente una libreria per l'elaborazione dei raster.
 
-Il plugin descritto in questa tesi richiede l'istallazione di Grass per il suo corretto funzionamento anche se non usa direttamente la libreria di Grass. 
+Il plugin descritto in questa tesi richiede l'istallazione di Grass per il suo corretto funzionamento anche se non usa direttamente la libreria di Grass.
 
 La libreria di Grass non è stata usata direttamente ma solo una delle sue componenti per avere maggiore libertà nei formati disponibili di file. Infatti, a meno di un ridotto numero di plugin, non è possibile aumentare i tipi di file supportati da Grass in quanto si limitano solo ai formati forniti con l'installazione standard di QGis.
 

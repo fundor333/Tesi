@@ -13,7 +13,7 @@ Questa appendice spiega come è strutturato a livello di codice il plugin. In pa
 \section{Struttura del plugin}
 Il plugin, per poter funzionare, deve seguire la struttura standard indicata sulle api ufficiali \cite{site:qgisapi}:
 \begin{itemize}
-	\item \textbf{File di configurazione}: necessari per il corretto funzionamento del plugin, contengono le informazioni per far funzionare correttamente il plugin, i codici delle versioni di QGis supportate e gli indirizzi delle risorse grafiche. 
+	\item \textbf{File di configurazione}: necessari per il corretto funzionamento del plugin, contengono le informazioni per far funzionare correttamente il plugin, i codici delle versioni di QGis supportate e gli indirizzi delle risorse grafiche.
 	\item \textbf{Risorse grafiche}: file che contengono il codice che, compilato, produce il codice che disegna le interfacce grafiche del plugin. Questi file sono strati costruiti attraverso la libreria grafica QT e vengono poi compilati in python.
 	\item \textbf{Codice}: il codice che viene effettivamente eseguito dal plugin. Diviso in più file per facilità di manutenzione, deve contenere un file \_init\_.py da cui si avvia interamente il plugin.
 \end{itemize}
@@ -24,7 +24,7 @@ In particolare è necessaria la presenza di un file \_init\_.py in cui viene lan
 In oltre, la corretta e completa compilazione del file metadata.txt permette l'invio del plugin ai server ufficiali di QGis per l'inserimento del plugin all'interno del catalogo ufficiale, che viene visualizzato all'interno del menu Plugin quando si vede quali sono i plugin attivi, disattivati, installati e non installati in QGis.
 
 \subsection{metadata.txt}
-File contenente i dati sul plugin. Tutte le informazioni che QGis carica attraverso il catalogo plugin provengono da questo file. 
+File contenente i dati sul plugin. Tutte le informazioni che QGis carica attraverso il catalogo plugin provengono da questo file.
 Questi dati vengono divisi in due macrocategorie:
 \begin{itemize}
 	\item \textbf{Mandatory items}: Elementi senza i quali QGis non riconosce il plugin. Senza di questi elementi non è nemmeno possibile caricare il plugin nel catalogo online
@@ -46,5 +46,5 @@ Questi dati vengono divisi in due macrocategorie:
 \end{itemize}
 
 \subsection{GdalTools\_utils.py}
-Script dal pacchetto GdalTools. Permette di aprire una finestra di salvataggio del file. Utilizzandola siamo obbligati a utilizzare la licenza GNU GPU v2 o superiore. 
+Script dal pacchetto GdalTools. Permette di aprire una finestra di salvataggio del file. Utilizzandola siamo obbligati a utilizzare la licenza GNU GPU v2 o superiore.
 E' stato scelto di utilizzare questo script all'interno del progetto in modo da evitare dipendenze dal pacchetto GdalTools che risulta essere incompatibile con alcune installazioni di python e alcuni plugin. Per questo motivo, seguendo le indicazioni della licenza e condizioni d'uso di GdalTools, è stato copiato in modo integrale il file \textit{GdalTools\_utils.py} contenente la funzione necessaria per la visualizzazione della finestre e dell'elenco dei formati disponibili.

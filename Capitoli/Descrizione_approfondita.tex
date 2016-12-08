@@ -9,11 +9,11 @@
 %************************************************
 \section{Problema da risolvere}
 \label{problemadarisolvere}
-Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si puo' scegliere qualunque area georgrafica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare}.
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si può scegliere qualunque area geografica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare per come sono strutturati e perché altrimenti l'errore del dato renderebbe inutilizzabile il dato stesso}.
 
-Il modello viene definito col nome RUSLE\footnote{\textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation} che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso.
+Il modello viene definito col nome \rusle \footnote{\textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation} che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso in un determinato periodo di tempo in base a dei parametri passati dall'utente.
 
-Il problema puo' essere descritto nell'equazione
+Il problema può essere descritto nell'equazione
 \begin{equation} \label{eq:main}
 A = R * K * LS * C * P
 \end{equation}
@@ -46,7 +46,7 @@ In questa equazione
 	\item \textit{$p_i$} corrisponde alle precipitazioni dell'$i$-esimo anno.
 \end{itemize}
 
-Questo permette una approssimazione utile per l'applicazione del modello RUSLE.
+Questo permette una approssimazione utile per l'applicazione del modello \rusle.
 
 \subsection{K o erodibilità del suolo}
 
@@ -108,7 +108,7 @@ Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati
 
 	\item \textit{Indipendente} il sistema scelto deve essere indipendente dal sistema operativo, in modo da poter essere utilizzato su qualunque dispositivo\footnote{Si considerano solo computer, i dispositivi mobili non sono \textit{espressamente} richiesti}.
 
-	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello RUSLE.
+	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello \rusle.
 
 	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
 
@@ -173,13 +173,13 @@ In particolare sono stati utilizzati:
 	\item \textit{Sistema di supporto di formati di file} Collegandosi al sistema di supporto dei formati di file è possibile utilizzare tutti i formati supportati dall'installazione di QGis. Questo, a sua volta, è estendibile con l'utilizzo di altri plugin che aggiungono formati di file utilizzabili in lettura e scrittura che, a loro volta, possono essere utilizzati da gli altri plugin installati, tra cui quello descritto in questa tesi.
 	\item \textit{Motore di calcolo} QGis comprende un pacchetto di operazioni standard sui file raster. Questo pacchetto risulta molto pratico in quanto ottimizzato per le esigenze di QGis risulta particolarmente efficiente a elaborare i raster.
 	\item \textit{Sistema di rendering a video dei dati} Il sistema permette di visualizzare i file a schermo in versione grafica. Questo può essere fatto con l'output dei dati ottenuti dal plugin e sovrapposto a mappe fisiche, rendendo così più immediata la visualizzazione.
-	\item \textit{Api di supporto per i plugin} Il sistema con cui si collega a QGis. Permette l'utilizzo da parte del plugin delle funzionalità di QGis senza difficolta e fissando delle convenzioni per il funzionamento e i sistemi di comunicazione.
+	\item \textit{Api di supporto per i plugin} Il sistema con cui si collega a QGis. Permette l'utilizzo da parte del plugin delle funzionalità di QGis senza difficoltà e fissando delle convenzioni per il funzionamento e i sistemi di comunicazione. Questo porta alla possibilità di combinare diversi plugin per ottenere automatismi più complessi di quelli di partenza.
 \end{itemize}
 
 
 \subsection{Descrizione dei tipi di dati supportati}
 
-Per applicare il modello Rusle è necessario passare al programma i dati necessari per l'applicazione del modello matematico.
+Per applicare il modello \rusle è necessario passare al programma i dati necessari per l'applicazione del modello matematico.
 In linea generale esistono svariati sistemi per passare i dati a un programma che si dividono in tre categorie:
 
 \begin{itemize}
