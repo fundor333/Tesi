@@ -39,24 +39,24 @@ Per come è strutturato QGis è possibile avere entrambi implementati nel plugin
 
 In particolare in questa applicazione è stata implementata l'interfaccia grafica in quanto risulta molto più adatta all'uso effettivo dell'applicazione.
 
-Infatti come si vede nell'immagine \ref{fig:screen1} per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
+Infatti come si vede nell'immagine \ref{fig:screen1} per il progetto in esame è necessario soltanto una GUI di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Per come è stato costruito il plugin se si vuole passare i file di input è necessario passarli anche la codifica del file per permettere di scrivere o leggere correttamente il file\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato utilizzando la finestra \ref{fig:screen1}}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{Capitoli/img/interfaccia.png}
-	\caption{La finestre di configurazione del plugin. Permette di indicare il path dei file in input e quello di output in modo grafico}
+	\caption{La finestre di configurazione dell'input e output del plugin. Permette di indicare il path dei file in modo grafico utilizzando la finestra standard di selezione del file del sistema operativo che si sta utilizzando.}
 	\label{fig:screen1}
 \end{figure}
 
 \subsubsection{Qt4}
 
-Le librerie grafiche per Python\footnote{Il linguaggio in cui è stato scritto il plugin} sono molte e varie ma la scelta è stata abbastanza facile: QT.
+Le librerie grafiche per Python\footnote{Il linguaggio in cui è stato scritto il plugin} sono molte e varie ma la scelta è stata abbastanza facile: QT versione 4.
 
-Questa scelta è stata dettata dal desiderio di ridurre al minimo le dipendenze esterne dal plugin. Questo comporta l'utilizzo preferenziale delle librerie utilizzate da QGis per semplificare l'installazione delle dipendenze. In particolare, con QGis è stato necessario scegliere anche la versione di QT con cui sviluppare il plugin. La scelta è stata fatta su QT4 ovvero la funzione supportata dalla versione 2.0 in poi di QGis.  Questo permette un enorme supporto di versioni di QGis da parte del plugin.
+Questa scelta è stata dettata dal desiderio di ridurre al minimo le dipendenze esterne dal plugin. Questo comporta l'utilizzo preferenziale delle librerie utilizzate da QGis per semplificare l'installazione delle dipendenze. In particolare, con QGis è stato necessario scegliere anche la versione di QT con cui sviluppare il plugin in modo da non avere versioni differenti di QT rispetto a quella utilizzata QGis. La scelta è stata fatta su QT4 ovvero la funzione supportata dalla versione 2.0 in poi di QGis.  Questo permette la completa compatibilità di tutte le versioni esistenti supportate di QGis\footnote{Il plugin non è compatibile con QGis versioni antecedenti alla 2.x in quanto quelle versioni non sono più considerate stabili e non vengono più aggiornate. Questo perché quelle versioni utilizzano versioni precedenti di QT che porta ad renderizzare la grafica in modo corretto}.
 
-La versione QT5 che verrà impiegata per le future versioni di QGis è già interamente supportata dall'applicazione. Questo è stato possibile attraverso un attento sviluppo attraverso funzioni non deprecate e controllo continuo delle nuove funzionalità di QT5 e delle modifiche che questa fa nel funzionamento complessivo in modo di essere già compatibile quando sarà necessario passare a QT5 in quanto QT4 non sarà più prerequisito di QGis.
+La versione QT5 che verrà impiegata per le future versioni di QGis è già interamente supportata dal plugin. Questo è stato possibile attraverso un attento sviluppo attraverso funzioni non deprecate e controllo continuo delle nuove funzionalità di QT5 e delle modifiche che questa fa nel funzionamento complessivo in modo di essere già compatibile quando sarà necessario passare a QT5 in quanto QT4 non sarà più prerequisito di QGis venendo sostituito da QT5.
 
-Ovviamente si poteva avere lo stesso risultato utilizzando altre librerie grafiche esterne o quelle di pyhton ma è stato scelto QT anche per avere una coerenza grafica tra le varie finestre che vanno ad aprirsi. Infatti se venisse utilizzata un altra libreria grafica sarebbe necessario una rielaborazione della grafica standard della libreria in modo che si comporti coerentemente rispetto a QT per ogni sistema operativo, il che porterebbe a una complicazione del codice non necessaria.
+Ovviamente si poteva avere lo stesso risultato utilizzando altre librerie grafiche esterne o quelle di Python ma è stato scelto QT anche per avere una coerenza grafica tra le varie finestre che vanno ad aprirsi. Infatti se venisse utilizzata un altra libreria grafica sarebbe necessario una rielaborazione della grafica standard delle librerie in modo che si comportino coerentemente rispetto a QT e QGis per ogni sistema operativo, il che porterebbe a una complicazione del codice non necessaria\footnote{\egrave considerata non necessarie in quanto non porta vantaggi al sistema e ne aumenta la quantità rendendolo più complesso da mantenere}.
 
 \subsection{Leggere e scrivere i dati}
 Il plugin prende in ingresso i file contenenti i dati necessari per l'applicazione al modello matematico descritto dall'equazione \ref{eq:main}. Quindi, una volta eseguite le operazioni produce l'output corrispondente all'erosione per il numero di anni dati in input.
