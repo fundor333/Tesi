@@ -26,22 +26,26 @@ Questa strutturazione permette il riciclo del codice di altri progetti che hanno
 \subsection{Interfaccia grafica}
 Al momento della progettazione dell'applicazione è stato necessario pensare come realizzare l'inserimento dei dati da elaborare da parte dell'utente. 
 Si è quindi pensato alla tipologia di utente che può utilizzare il nostro plugin facendo attenzione alle sue competenze e al suo background.
-Questo, solitamente, viene fatto in due modi:
+Questo ha portato a ridurre la soluzione in due macro categorie:
 \begin{itemize}
 
-\item Attraverso l'uso di un \textbf{terminale} in cui vengono passati dei comandi che eseguono le operazioni richieste e mostra a schermo tutti i dati dei comandi eseguiti. Questo però obbliga l'utente a sapere i comandi necessari alla esecuzione dei task e ritorna a schermo dati di poco interesse per l'utente medio, molto utile invece se sei un programmatore e vuoi controllare come procedono i vari passi dei comandi eseguiti e permette di vedere subito ove avvengono gli errori e cosa li generano.
+\item Interfaccia e plugin sviluppati per \textbf{terminale}. \egrave la soluzione di più facile dal punto di vista dell'implementazione anche se non è quella più pratica per l'utente. Infatti, anche se questo sistema di input e output favorisce una modalità \textit{verbosa}\footnote{Questa modalità permette di inserire nell'output un quantitativo maggiore di informazioni solitamente utilizzate per il debugging, la creazione di componenti avanzati o comunque task per utenti avanzati.} di output. Di contro però obbliga l'utente a conoscere i comandi per il terminale, quali navigazione tra file e cartelle, e i comandi per eseguire operazioni direttamente col plugin senza lanciare direttamente QGis. Queste caratteristiche portano questa soluzione a essere considerata per utenti avanzati.
 
-\item Attraverso l'uso di una \textbf{interfaccia grafica o GUI} in cui viene selezionato, attraverso l'uso di bottoni, menu e interuttori le funzioni che si vogliono eseguire e si danno i file in input con un selettore grafico. Permette all'utente di non interessarsi a come è stato realizzata l'operazione richiesta, di non cunsultare guide e manuali con gli elenchi dei comandi disponibili e di ricevere a schermo solo le informazioni di cui è realmente interessato. Oltre a essere la scelta più pratica per un nuovo utente è anche quella che da al programmatore che sviluppa questa applicazione la maggior libertà e indipendenza. Infatti la presenza di una grafica comune tra aggiornamenti diversi permette al programmatore di riscrivere interamente i comandi che vengono eseguiti al di sotto dell'interfaccia senza dover avvisare l'utente del cambiamento dei comandi all'interno del terminale.
+\item Interfaccia e plugin sviluppati per \textbf{GUI}. Questo è la soluzione solitamente utilizzata per QGis. Risulta più naturale per l'utente e molto più intuitiva dell'altra. \egrave anche la soluzione che ti obbliga a utilizzare il maggior numero di librerie esterne e, di conseguenza, aumenta le dipendenze da queste stesse. Nel nostro caso, però, non vengono aumentate le dipendenze in quanto è possibile utilizzare le stesse librerie grafiche che QGis utilizza e quindi rientrare nelle dipendenze già soddisfatte installando QGis. Con queste ultime librerie è quindi anche possibile avere una interfaccia unica indipendente dal sistema operativo usato invece che, come invece accade nella soluzione via terminale, avere delle differenze\footnote{Nella risoluzione del terminale possiamo vincolare solo alcune operazioni del plugin ai comandi da noi definiti. Il sistema operativo comunque obbliga gli altri comandi necessari per le altre operazioni a parole chiave spesso non concordanti tra sistemi differenti.}.
 
 \end{itemize}
 
-Per come è strutturato QGis è possibile avere entrambi implementati nel plugin ma è stato preferito dare maggiore attenzione alla componente grafica anche se è comunque possibile aprire il terminale di QGis ed eseguire dei comandi.
+Per come è strutturato QGis è possibile avere entrambi implementati nel plugin ma è stato preferito dare maggiore attenzione alla componente grafica anche se è comunque possibile aprire il terminale Python interno di QGis ed eseguire dei comandi per ottenere gli stessi risultati ma senza avviare l'interfaccia grafica.
 
 In particolare in questa applicazione è stata implementata l'interfaccia grafica in quanto risulta molto più adatta all'uso effettivo dell'applicazione.
 
-%TODO inserire qui immagine della gui
+\begin{figure}
+	\includegraphics[width=\linewidth]{Capitoli/img/interfaccia.png}
+	\caption{A boat.}
+	\label{fig:boat1}
+\end{figure}
 
-Infatti come si vede nell'immagine [link immagine] per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
+Infatti come si vede nell'immagine \ref{fig:boat1} per il progetto in esame è necessario soltanto una gui di inserimento dati in cui, in base al tipo di file inserito e al tipo di output,li elabora correttamente. Questo, su terminale, risulta invece più difficile in quanto bisognerebbe avere una lista dei driver necessari per la corretta lettura e inserirli assieme al file da leggere\footnote{Questo viene fatto automaticamente dall'interfaccia grafica selezionando il file desiderato}.
 
 \subsubsection{Qt4}
 
