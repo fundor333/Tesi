@@ -9,9 +9,25 @@
 %************************************************
 \section{Problema da risolvere}
 \label{problemadarisolvere}
-Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si può scegliere qualunque area geografica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare per come sono strutturati e perché altrimenti l'errore del dato renderebbe inutilizzabile il dato stesso}.
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si può scegliere qualunque area geografica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare per come sono strutturati e perché altrimenti l'errore del dato renderebbe inutilizzabile il dato stesso} per avere una esaminazione corretta. 
 
-Il modello viene definito col nome \rusle \footnote{\textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation} che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso in un determinato periodo di tempo in base a dei parametri passati dall'utente.
+Questa tesi si basa sull'utilizzo di dati di vario genere:
+
+\begin{itemize}
+\item \textbf{Dati pluviometrici}: ottenuti da una serie di stazioni di monitoraggio delle precipitazioni, vengono successivamente rielaborati per essere resi utili per gli scopi dela tesi. Questi dati infatti devono essere "estrapolati" in modo coerente alla granularità del resto dei dati presi in esame
+\item \textbf{Dati geomorfici}: sono la composizione geomorfica del territorio preso in esame, con particolare interesse verso le pendenze, le altimetrie puntuali e la struttura di composizione del territorio
+\item \textbf{Dati di copertura del suolo}: cosa c'è sopra al terreno preso in esame, che influisce sull'erosione del terreno sottostante.
+\item \textbf{Misure di prevenzione dell'erosione}: mappatura delle forme di prevenzione dell'erosione sul terreno preso in considerazione.
+\end{itemize}
+
+Questi dati vengono riadattati per seguendo le indicazioni date dal modello\ref{definizionedelmodello} permettendo così una prima forma di controllo sui dati.
+
+\subsection{Definizione del modello}
+\label{definizionedelmodello}
+
+Il modello matematico su cui si basa questa tesi è un modello \rusle che utilizza una serie di file di tipo raster per l'input e l'output delle informazioni.
+
+Il \textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso in un determinato periodo di tempo in base a dei parametri passati dall'utente.
 
 Il problema può essere descritto nell'equazione
 \begin{equation} \label{eq:main}
