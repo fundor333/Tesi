@@ -9,9 +9,25 @@
 %************************************************
 \section{Problema da risolvere}
 \label{problemadarisolvere}
-Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si può scegliere qualunque area geografica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare per come sono strutturati e perché altrimenti l'errore del dato renderebbe inutilizzabile il dato stesso}.
+Lo scopo di questa tesi è quello di calcolare e visualizzare in modo corretto l'erosione del territorio nell'area geografica scelta. Come già accennato nell'introduzione, si può scegliere qualunque area geografica superiore a un metro quadro\footnote{Dimensione minima sotto la quale i file formato raster non possono andare per come sono strutturati e perché altrimenti l'errore del dato renderebbe inutilizzabile il dato stesso} per avere una esaminazione corretta. 
 
-Il modello viene definito col nome \rusle \footnote{\textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation} che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso in un determinato periodo di tempo in base a dei parametri passati dall'utente.
+Questa tesi si basa sull'utilizzo di dati di vario genere:
+
+\begin{itemize}
+\item \textbf{Dati pluviometrici}: ottenuti da una serie di stazioni di monitoraggio delle precipitazioni, vengono successivamente rielaborati per essere resi utili per gli scopi dela tesi. Questi dati infatti devono essere "estrapolati" in modo coerente alla granularità del resto dei dati presi in esame
+\item \textbf{Dati geomorfici}: sono la composizione geomorfica del territorio preso in esame, con particolare interesse verso le pendenze, le altimetrie puntuali e la struttura di composizione del territorio
+\item \textbf{Dati di copertura del suolo}: cosa c'è sopra al terreno preso in esame, che influisce sull'erosione del terreno sottostante.
+\item \textbf{Misure di prevenzione dell'erosione}: mappatura delle forme di prevenzione dell'erosione sul terreno preso in considerazione.
+\end{itemize}
+
+Questi dati vengono riadattati per seguendo le indicazioni date dal modello\ref{definizionedelmodello} permettendo così una prima forma di controllo sui dati.
+
+\subsection{Definizione del modello}
+\label{definizionedelmodello}
+
+Il modello matematico su cui si basa questa tesi è un modello \rusle che utilizza una serie di file di tipo raster per l'input e l'output delle informazioni.
+
+Il \textbf{R}evised \textbf{U}niversal \textbf{S}oil \textbf{L}oss \textbf{E}quation che altro non è che una serie di equazioni che permettono di calcolare la percentuale di suolo perso in un determinato periodo di tempo in base a dei parametri passati dall'utente.
 
 Il problema può essere descritto nell'equazione
 \begin{equation} \label{eq:main}
@@ -108,11 +124,11 @@ Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati
 
 	\item \textit{Indipendente} il sistema scelto deve essere indipendente dal sistema operativo, in modo da poter essere utilizzato su qualunque dispositivo\footnote{Si considerano solo computer, i dispositivi mobili non sono \textit{espressamente} richiesti}.
 
-	\item{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello \rusle.
+	\item \textit{Semplice} il sistema non deve avere pre-requisiti di competenze o capacità specifici in modo da permettere a teoreticamente chiunque di applicare il modello \rusle.
 
-	\item{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
+	\item \textit{Automatizzabile} il sistema scelto deve essere automatizzabile in modo da poterlo lanciare attraverso un sistema automatizzato senza la presenza costante di intervento umano.
 
-	\item{Visuabilizzabile} il sistema deve avere un output dati facilmente leggibile per l'essere umano attraverso il sistema stesso o un software specifico.
+	\item \textit{Visuabilizzabile} il sistema deve avere un output dati facilmente leggibile per l'essere umano attraverso il sistema stesso o un software specifico.
 
 \end{itemize}
 
@@ -120,11 +136,11 @@ Tutti questi sistemi per la visione e applicazione del modello RUSTLE sono stati
 Attraverso i classici programmi di creazione di ambienti virtuali è possibile visualizzare l'ambiente e le modifiche dell'ambiente in base ai dati raccolti. Questo permette di creare una rappresentazione realistica e molto dettagliata dell'ambiente preso in esame ma richiede una grossa quantità di tempo e notevoli sforzi, senza contare che necessità di un esperto di modellazione 3D che si occupi del lavoro.
 
 \begin{itemize}
-	\item{Visuabilizzabile} Molto facile da visualizzare e navigare. Questo risulta il migliore sistema esaminato per vedere gli effetti dell'erosione nel terreno preso in esame
+	\item \textit{Visuabilizzabile} Molto facile da visualizzare e navigare. Questo risulta il migliore sistema esaminato per vedere gli effetti dell'erosione nel terreno preso in esame
 
-	\item{Non ripetibile e complesso} Il sistema prevede che l'utente abbia una buona conoscenza di software di modellazione 3D e deve calcolare tutta l'erosione in modo autonomo.
+	\item \textit{Non ripetibile e complesso} Il sistema prevede che l'utente abbia una buona conoscenza di software di modellazione 3D e deve calcolare tutta l'erosione in modo autonomo.
 
-	\item{Lento e non automatizzabile} Il sistema prevede la presenza di uno o più persone che sviluppino una mappa 3D. Anche l'utilizzo di una mappa 3D pre-esistente comunque porta il lavoro a tempi superiori a venti minuti e risulta infattibile senza la presenza della persona.
+	\item \textit{Lento e non automatizzabile} Il sistema prevede la presenza di uno o più persone che sviluppino una mappa 3D. Anche l'utilizzo di una mappa 3D pre-esistente comunque porta il lavoro a tempi superiori a venti minuti e risulta infattibile senza la presenza della persona.
 \end{itemize}
 
 
@@ -132,11 +148,11 @@ Attraverso i classici programmi di creazione di ambienti virtuali è possibile v
 Attraverso alcuni linguaggi di programmazione è possibile calcolare il raster di output. Per esempio è possibile farlo con Mathlab, R o Python. La differenza tra i linguaggi è sostanzialmente la velocità di esecuzione del codice e quanto il codice è mantenibile.
 
 \begin{itemize}
-	\item{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo automatico e ripetibile un numero infinito di volte.
+	\item \textit{Ripetibile e automatizzabile} Una volta realizzato il sistema è pronto per essere utilizzato in modo automatico e ripetibile un numero infinito di volte.
 
-	\item{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così dipendenze esterne non desiderabili.
+	\item \textit{Non indipendente} In base al linguaggio scelto e a come è stato compilato il programma è possibile che questo richieda dei prerequisiti, sotto forma di librerie di terze parti o macchine virtuali per il loro funzionamento, creando così dipendenze esterne non desiderabili.
 
-	\item{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare i dati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
+	\item \textit{Forse visuabilizzabile} La parte più difficile di questo sistema. Ci sono due strade possibili: l'utilizzo di un visualizzatore esterno a cui affidiamo il compito di visualizzare i dati oppure sviluppiamo anche un sistema di visualizzazione personalizzato cercando di tenere al minimo le dipendenze con librerie di terze parti.
 	
 \end{itemize}
 
@@ -144,16 +160,18 @@ Questo sistema riesce a essere quello più adatto alle nostre esigenze ma ci vin
 
 \subsection{Desktop QGis}
 
-Software che permette di visualizzare e elaborare raster e altri formati di file geomorfici. Molto usato e supporta, nativamente o attraverso plugin installabili, la quasi totalità dei formati di file esistenti. In oltre permette, attraverso codice python, c e c++, di estendere le funzionalità del programma stesso.
+E' un software che permette di visualizzare e elaborare raster e altri formati di file geomorfici. Molto usato in ambito industriale e accademico, supporta, nativamente o attraverso plugin installabili, la quasi totalità dei formati di file geomorfici esistenti. In oltre permette, attraverso codice Python, C e C++, di estendere le funzionalità del programma stesso.
+
+I vantaggi di un plugin per QGis sono i seguenti:
 
 \begin{itemize}
-	\item{Ripetibile} una volta scritto il plugin risulta riutilizzabile semplicemente cambiando i dati.
+	\item \textit{Ripetibile} una volta scritto il plugin risulta riutilizzabile semplicemente cambiando i dati.
 
-	\item{Automatizzabile} Se scritto correttamente il plugin può effettuare la task assegnata in modo automatico ricevendo i dati da un altro processo.
+	\item \textit{Automatizzabile} Se scritto correttamente il plugin può effettuare la task assegnata in modo automatico ricevendo i dati da un altro processo.
 
-	\item{Visualizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati geo referenziati
+	\item \textit{Visualizzabile} QGis dispone di un intero motore di renderig integrato che permette di visualizzare i dati in modo semplice e, con l'aggiunta di plugin, è anche possibile applicare i dati su una mappa, mostrando in modo più efficace i dati geo referenziati
 
-	\item{Multi piattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
+	\item \textit{Multi piattaforma} QGis è installabile sulla totalità dei desktop pc e su molti server. In oltre, se scritti correttamente, anche i plugin per QGis funzionano correttamente su tutte le piattaforme e alcuni tipi di server.
 \end{itemize}
 
 In oltre QGis risulta essere la prima scelta, come software, per l'analisi di dati geomorfici in ambito scientifico, per cui risulta naturale la scelta di sviluppare un plugin per questo applicativo.
